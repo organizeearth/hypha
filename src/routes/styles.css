@@ -1,3 +1,9 @@
+/**
+ * App-wide global styles
+ *
+ * Note: additional styles may override these. Any .svelte file may contain additional component-specific styles.
+ */
+
 @import '@fontsource/fira-mono';
 
 :root {
