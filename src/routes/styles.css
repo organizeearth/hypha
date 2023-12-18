@@ -1,0 +1,194 @@
+@import '@fontsource/fira-mono';
+
+:root {
+	--font-body: Arial, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu,
+		Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+	--font-mono: 'Fira Mono', monospace;
+	--color-bg-0: rgb(202, 216, 228);
+	--color-bg-1: hsl(209, 36%, 86%);
+	--color-bg-2: hsl(224, 44%, 95%);
+	--color-theme-1: #0c0074;
+	--color-theme-2: #001390;
+	--color-text: rgba(15, 0, 127, 0.7);
+	--column-width: 42rem;
+	--column-margin-top: 4rem;
+	font-family: var(--font-body);
+	color: var(--color-text);
+}
+
+body {
+	min-height: 100vh;
+	margin: 0;
+	background-attachment: scroll;
+	background-color: var(--color-bg-1);
+	background-size: 100vw 100vh;
+	background-image: radial-gradient(
+			50% 50% at 50% 50%,
+			rgba(255, 255, 255, 0.75) 0%,
+			rgba(255, 255, 255, 0) 100%
+		),
+		linear-gradient(180deg, var(--color-bg-0) 0%, var(--color-bg-1) 15%, var(--color-bg-2) 50%);
+	background-image: url(https://i.imgur.com/FGBeDab.jpeg);
+	background-repeat: repeat;
+}
+
+h1,
+h2,
+p {
+	font-weight: 400;
+}
+
+p {
+	line-height: 1.5;
+}
+
+a {
+	color: var(--color-theme-1);
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+h1 {
+	font-size: 2rem;
+	text-align: center;
+}
+
+h2 {
+	font-size: 1rem;
+}
+
+pre {
+	font-size: 16px;
+	font-family: var(--font-mono);
+	background-color: rgba(255, 255, 255, 0.45);
+	border-radius: 3px;
+	box-shadow: 2px 2px 6px rgb(255 255 255 / 25%);
+	padding: 0.5em;
+	overflow-x: auto;
+	color: var(--color-text);
+}
+
+.text-column {
+	display: flex;
+	max-width: 48rem;
+	flex: 0.6;
+	flex-direction: column;
+	justify-content: center;
+	margin: 0 auto;
+}
+
+input,
+button {
+	font-size: inherit;
+	font-family: inherit;
+}
+
+button:focus:not(:focus-visible) {
+	outline: none;
+}
+
+@media (min-width: 720px) {
+	h1 {
+		font-size: 2.4rem;
+	}
+}
+
+.visually-hidden {
+	border: 0;
+	clip: rect(0 0 0 0);
+	height: auto;
+	margin: 0;
+	overflow: hidden;
+	padding: 0;
+	position: absolute;
+	width: 1px;
+	white-space: nowrap;
+}
+
+
+.tab-list-wrapper {
+    display: flex;
+    flex-direction: row;
+  }
+  .tab-list ul {
+    list-style-type: none;
+	display: flex;
+	flex-direction: row;
+    margin: 0;
+  }
+  .tab-list li {
+    display: flex;
+    border: 2px dotted var(--color-theme-1);
+    border-left: none;
+    border-right: none;
+    border-top: none;
+  }
+  .tab-list .active {
+    font-weight: bold;
+    border-bottom: none;
+    border-left: 2px dotted var(--color-theme-1);
+    border-right: 2px dotted var(--color-theme-1);
+    border-top: 2px dotted var(--color-theme-1);
+  }
+  .spacer {
+    border-bottom: 2px dotted var(--color-theme-1);
+	  margin-left: -2px;
+    flex: 1;
+  }
+  .nav-radio {
+    position: fixed;
+    opacity: 0;
+    pointer-events: none;
+  }
+  .tab-list label {
+	padding: 1em 2em;
+  }
+  .hidden {
+    display: none;
+  }
+  section:first-of-type {
+    border-bottom: none;
+  }
+  section.inner {
+    border-top: none;
+    padding-bottom: 4em;
+    text-align: center;
+  }
+  section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    flex: 1;
+    padding-top: 1em;
+    border: 2px dotted var(--color-theme-1);
+  }
+  section section {
+    border: none;
+    margin-left: 1em;
+    padding-top: 0;
+    min-height: 6em;
+  }
+  ul {
+    padding-left: 0;
+  }
+  .chip-list {
+    display: inline;
+    list-style: none;
+  }
+  .chip-list li {
+    float: left;
+    margin-right: 0.5em;
+    margin-bottom: 0.5em;
+  }
+
+  .dash-head h1 {
+    margin: 0.5em;
+  }
+
+  .app {
+    background: rgba(255, 255, 255, 0.5)
+  }
