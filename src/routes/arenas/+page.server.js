@@ -1,5 +1,5 @@
 import Airtable from 'airtable';
-import { env } from '$env/dynamic/private';
+import { env } from '$env/static/private';
 import { error } from '@sveltejs/kit';
 import {
     myBaseId,
