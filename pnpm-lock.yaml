@@ -26,9 +26,6 @@ dependencies:
   mapbox-gl:
     specifier: ^2.15.0
     version: 2.15.0
-  svelte^4.0.0:
-    specifier: link:@sveltejs/svelte^4.0.0
-    version: link:@sveltejs/svelte^4.0.0
   vercel:
     specifier: ^32.7.2
     version: 32.7.2
