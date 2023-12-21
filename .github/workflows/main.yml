@@ -1,0 +1,35 @@
+name: Deploy to static server
+
+on:
+  push:
+    branches:
+      - master
+  workflow_dispatch:
+    inputs:
+      name:
+        description: "Deploy comment"
+        required: true
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    name: Build and Deploy
+
+    steps:
+      - uses: actions/checkout@master
+
+      - name: Bucket actions
+        uses: actions/setup-node@v1
+        with:
+          node-version: 8
+      - run: npm i
+      - run: npm run build
+      
+      - name: Publish
+        uses: nogsantos/ssh-scp-deploy@v1.3.0
+        with:
+          src: ./build/*
+          host: ${{ secrets.SSH_HOST }}
+          remote: ${{ secrets.SSH_DIR }}
+          port: ${{ secrets.SSH_PORT }}
+          user: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_KEY }}
