@@ -12,7 +12,7 @@
   import { filterRefs } from "$lib/dataUtils";
   export let data = {};
   export let org = {};
-  console.log({ org });
+  //console.log({ org });
   $: filteredMarkers = [org]
     .filter((o) => hasLatLng(o))
     .map((o) => translateToMarker(o));
@@ -23,11 +23,11 @@
   $: activeOrgId = org?.id;
 
   function handleActivate(event) {
-    console.log({ id2: event.detail.id });
+    //console.log({ id2: event.detail.id });
     activeOrgId = event.detail.id;
   }
 
-  console.log({ arenas, methods, sectors });
+  //console.log({ arenas, methods, sectors });
   //data?.arenas?.length ? data?.arenas.filter((a) => org.arenas.includes(a.id)) : [];
   //$: sectors = data?.sectors.filter((a) => org.sectors.includes(a.id)) : [];
   //$: methods = data?.methods.filter((a) => org.methods.includes(a.id)) : [];

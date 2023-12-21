@@ -13,7 +13,7 @@
 
   $: org = data?.org || {};
 
-  console.log({ data });
+  //console.log({ data });
   //$: if (wegotorgs) console.log(data.orgs[0]);
   $: wegotcollabs = data && typeof data.collabs !== "undefined";
   $: wegotnets = data && typeof data.nets !== "undefined";

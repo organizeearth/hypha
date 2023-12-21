@@ -51,7 +51,7 @@
   const years = [2022, 2023, 2024, 2025, 2026, 2027, 2028, 2029];
   const setActiveYear = (year) => {
     activeYear = year;
-    console.log({ bulletins, links, benchmarks });
+    //console.log({ bulletins, links, benchmarks });
   }
   $: wegotorgs = data && typeof data.orgs !== "undefined";
   //$: if (wegotorgs) console.log(data.orgs[0]);
@@ -91,7 +91,7 @@
   };
 
   function filterChange() {
-    console.log("Change!");
+    //console.log("Change!");
     filters = filters;
     orgs = orgs;
     filteredOrgs = filteredOrgs;
@@ -129,14 +129,14 @@
   };
 
   function handleActivate(event) {
-    console.log({ id2: event.detail.id });
+    //console.log({ id2: event.detail.id });
     activeOrgId = event.detail.id;
   }
   function handleActivateForce(event) {
-    console.log({ id3: event.detail.id });
-    console.log({ rankedMethods, selectedMethod });
+    //console.log({ id3: event.detail.id });
+    //console.log({ rankedMethods, selectedMethod });
     let marker = document.getElementById(event.detail.id);
-    console.log({ marker });
+    //console.log({ marker });
     if (marker) {
       marker.click();
     }

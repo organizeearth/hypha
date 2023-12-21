@@ -6,7 +6,7 @@
   export let data;
 
   $: wegotanet = data && typeof data.nets !== "undefined";
-  $: console.log(data);
+  //$: console.log(data);
 </script>
 
 <svelte:head>

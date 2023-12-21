@@ -27,8 +27,8 @@
   //$: if (wegotcollabs) console.log(data.collabs[0]);
   $: wegotacollaborative = data && typeof data.collab != "undefined";
   $: collab = data?.collab;
-  console.log({data});
-  console.log({collab: data.collab });
+  //console.log({data});
+  //console.log({collab: data.collab });
   $: wegotcollaborgs =
     !!wegotacollaborative &&
     wegotorgs &&
