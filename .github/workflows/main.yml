@@ -18,7 +18,7 @@ jobs:
       - uses: actions/checkout@master
 
       - name: Bucket actions
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v4
         with:
           node-version: 8
       - run: npm i
