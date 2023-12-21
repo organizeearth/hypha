@@ -24,6 +24,7 @@
 	"dependencies": {
 		"@fontsource/anybody": "^4.5.5",
 		"@fontsource/delicious-handrawn": "^5.0.5",
+		"@sveltejs/adapter-static": "^3.0.1",
 		"airtable": "^0.11.6",
 		"chroma-js": "^2.4.2",
 		"d3": "^7.8.5",
