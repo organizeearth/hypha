@@ -1,8 +1,10 @@
 import Airtable from "airtable";
-import { env } from "$env/dynamic/private";
+import { VITE_AIRTABLE_BASE_ID } from '$env/static/private';
+import { AIRTABLE_KEY } from '$env/static/private';
+
 import { error } from "@sveltejs/kit";
 
-const myBaseId = import.meta.env.VITE_AIRTABLE_BASE_ID;
+const myBaseId = VITE_AIRTABLE_BASE_ID;
 
 const cleanLat = (lat) => {
   return lat || 40.0157514;
@@ -272,7 +274,7 @@ const benchmarkConfig = {
 function setupBase(baseId) {
   Airtable.configure({
     endpointUrl: "https://api.airtable.com",
-    apiKey: env.AIRTABLE_KEY,
+    apiKey: AIRTABLE_KEY,
   });
   var base = Airtable.base(baseId);
 
