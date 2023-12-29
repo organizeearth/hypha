@@ -4,7 +4,7 @@
     Geocoder,
     Marker,
     controls,
-  } from "@beyonk/svelte-mapbox/components";
+  } from "svelte-mapbox-4-temp/components";
   import { entities } from "$lib/entities.js";
   import BaseballCard from "$lib/BaseballCard.svelte";
   import CustomMarker from "$lib/mapbox/CustomMarker.svelte";

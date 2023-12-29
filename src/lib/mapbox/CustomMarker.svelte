@@ -1,6 +1,6 @@
 <script>
   import { onMount, getContext } from "svelte";
-  import { contextKey } from "@beyonk/svelte-mapbox";
+  import { contextKey } from "svelte-mapbox-4-temp";
   import { createEventDispatcher } from "svelte";
 
   const dispatch = createEventDispatcher();
