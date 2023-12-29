@@ -13,6 +13,9 @@ jobs:
   build:
     runs-on: ubuntu-latest
     name: Build and Deploy
+    env:
+      AIRTABLE_KEY: ${{secrets.AIRTABLE_KEY}}
+      VITE_AIRTABLE_BASE_ID: ${{secrets.VITE_AIRTABLE_BASE_ID}}
 
     steps:
       - uses: actions/checkout@master
