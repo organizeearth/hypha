@@ -5,6 +5,7 @@ import { AIRTABLE_KEY } from '$env/static/private';
 import { error } from "@sveltejs/kit";
 
 const myBaseId = VITE_AIRTABLE_BASE_ID;
+const myApiKey = AIRTABLE_KEY;
 
 const cleanLat = (lat) => {
   return lat || 40.0157514;
@@ -378,6 +379,7 @@ export async function load({ params }) {
 // it so that it gets served as a static asset in prod
 export {
   myBaseId,
+  myApiKey,
   orgConfig,
   orgFieldMap,
   collabConfig,
