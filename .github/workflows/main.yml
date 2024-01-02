@@ -26,7 +26,17 @@ jobs:
           node-version: 18
       - run: npm i
       - run: npm run build
-      
+
+      - name: copy file via ssh password
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          password: ${{ secrets.PASSWORD }}
+          port: ${{ secrets.SSH_PORT }}
+          source: "/build/*"
+          target: ${{ secrets.SSH_DIR }}
+        
       - name: Publish
         uses: nogsantos/ssh-scp-deploy@v1.3.0
         with:
