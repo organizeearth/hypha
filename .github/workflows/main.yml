@@ -28,7 +28,7 @@ jobs:
       - run: npm run build
 
       - name: connect to may first shell
-        uses: baisong/mayfirst-shell-action@v0.0.1
+        uses: baisong/mayfirst-shell-action@v0.0.2
         with:
           user: ${{ secrets.SSH_HOST }}
           password: ${{ secrets.PASSWORD }}
