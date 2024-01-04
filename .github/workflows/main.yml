@@ -26,14 +26,9 @@ jobs:
           node-version: 18
       - run: npm i
       - run: npm run build
-
-      - name: Install curl
-        run: sudo apt-get install -y curl
-      - name: Install jq
-        run: sudo apt-get install -y jq
         
       - name: connect to may first shell
-        uses: baisong/mayfirst-shell-action@v0.0.2
+        uses: baisong/mayfirst-shell-action@v0.0.3
         with:
           user: ${{ secrets.SSH_HOST }}
           password: ${{ secrets.PASSWORD }}
