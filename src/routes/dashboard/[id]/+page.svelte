@@ -12,53 +12,23 @@
     translateToMarker,
     defaultFilterMethod,
     filterOptions,
-    defaultClusterMethod,
+    getMethodsWithOrgCounts
   } from "$lib/dash/dashUtils";
 
   /** @type {import('./$types').PageData} */
   export let data;
 
-  function groupOrgsWithCollabs(orgs, collabs) {
-    return collabs.map(function (c) {
-      return {
-        ...c,
-        orgObjects: orgs.filter((o) => c.orgs.includes(o.id)),
-      };
-    });
-  }
-
-  function getMethodsWithOrgCounts(methods, orgs) {
-    return methods.map(function (m) {
-      const orgObjects = orgs.filter((o) => o?.methods?.includes(m.id));
-      return {
-        ...m,
-        orgCount: orgObjects.length,
-        orgObjects: orgObjects,
-      };
-    });
-  }
-
   const calendarText = "Upcoming events";
   const calendarUrl = "https://boulder.earth/calendar/";
   const bulletinText = "Take action now";
   const bulletinUrl = "https://boulder.earth/actions-for-impact/";
-
-  $: bulletins = data.bulletins;
-  $: links = data.links;
-  $: benchmarks = data.benchmarks;
   
   let activeYear = 2023;
   const years = [2022, 2023, 2024, 2025, 2026, 2027, 2028, 2029];
   const setActiveYear = (year) => {
     activeYear = year;
-    //console.log({ bulletins, links, benchmarks });
   }
   $: wegotorgs = data && typeof data.orgs !== "undefined";
-  //$: if (wegotorgs) console.log(data.orgs[0]);
-  //$: wegotcollabs = data && typeof data.collabs !== "undefined";
-  //$: if (wegotcollabs) console.log(data.collabs[0]);
-  //$: collabs = wegotcollabs ? data.collabs : [];
-
   $: wegotacollaborative = data && typeof data.collab != "undefined";
   $: wegotcollaborgs =
     !!wegotacollaborative &&
@@ -74,10 +44,10 @@
       ? collaborgs
       : data.orgs
     : [];
+
   let activeOrgId;
 
   let filterMethod = defaultFilterMethod;
-  let clusterMethod = defaultClusterMethod;
   /** @type {string} */
   let selectedArena;
   /** @type {string} */
@@ -141,8 +111,6 @@
       marker.click();
     }
   }
-  //let activeTab = "about";
-  //let tabs = ["about", "collabs", "orgs", "projects", "legend"];
 </script>
 
 <svelte:head>

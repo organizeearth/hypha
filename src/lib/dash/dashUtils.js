@@ -70,30 +70,21 @@ export const translateToMarker = (record) => {
   };
 };
 
-export const defaultFilterMethod = "collab";
+export const defaultFilterMethod = "active";
 export const filterOptions = [
   {
-    value: "collab",
-    label: "Collab orgs only",
+    value: "active",
+    label: "Active collaborators",
+  },
+  {
+    value: "potential",
+    label: "Potential collaborators",
   },
   {
     value: "all",
-    label: "All network orgs",
+    label: "Whole network",
   },
 ];
-
-export const defaultClusterMethod = "concentric";
-export const clusterOptions = [
-  {
-    value: "concentric",
-    label: "Concentric",
-  },
-  {
-    value: "blob",
-    label: "Blob",
-  },
-];
-
 
 export const colorLegend = [
   { color: "rgba(156, 46, 100, 1)", label: "Grassroots" },
@@ -104,3 +95,23 @@ export const colorLegend = [
   { color: "rgba(83, 81, 150, 1)", label: "Business" },
   //{ color: 'rgb(119, 70, 132)', label: "Off the charts" },
 ];
+
+export const groupOrgsWithCollabs = (orgs, collabs) => {
+  return collabs.map(function (c) {
+    return {
+      ...c,
+      orgObjects: orgs.filter((o) => c.orgs.includes(o.id)),
+    };
+  });
+}
+
+export const getMethodsWithOrgCounts = (methods, orgs) => {
+  return methods.map(function (m) {
+    const orgObjects = orgs.filter((o) => o?.methods?.includes(m.id));
+    return {
+      ...m,
+      orgCount: orgObjects.length,
+      orgObjects: orgObjects,
+    };
+  });
+}
