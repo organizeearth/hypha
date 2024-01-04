@@ -43,6 +43,8 @@ jobs:
           port: ${{ secrets.SSH_PORT }}
           source: "build/*"
           target: ${{ secrets.SSH_DIR }}
+          timeout: 5m
+          overwrite: true
         
 #      - name: Publish
 #        uses: nogsantos/ssh-scp-deploy@v1.3.0
