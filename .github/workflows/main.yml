@@ -6,7 +6,7 @@ on:
       - master
   workflow_dispatch:
     inputs:
-      name:
+      deploy_comment:
         description: "Deploy comment"
         required: true
 jobs:
@@ -30,6 +30,7 @@ jobs:
       - name: connect to may first shell
         uses: baisong/mayfirst-shell-action@v0.0.6
         with:
+          comment: ${{ inputs.deploy_comment }}
           user: ${{ secrets.SSH_HOST }}
           password: ${{ secrets.PASSWORD }}
           
