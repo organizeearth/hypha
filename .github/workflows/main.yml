@@ -31,7 +31,7 @@ jobs:
         uses: baisong/mayfirst-shell-action@v0.0.7
         with:
           comment: ${{ inputs.deploy_comment }}
-          user: ${{ secrets.SSH_HOST }}
+          user: ${{ secrets.SSH_USER }}
           password: ${{ secrets.PASSWORD }}
           
       - name: copy file via ssh password
