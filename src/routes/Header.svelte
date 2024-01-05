@@ -6,7 +6,7 @@
   import { onMount } from 'svelte';
 
   const dashboardId = "recGRgd9dx5YTov2E";
-  const dashboardUrl = `/dashboard/${dashboardId}`;
+  const dashboardUrl = `/dashboard/${dashboardId}.html`;
 
   let currentPath = $page.url.pathname;
 </script>
