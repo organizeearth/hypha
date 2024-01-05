@@ -34,25 +34,25 @@ jobs:
           user: ${{ secrets.SSH_USER }}
           password: ${{ secrets.PASSWORD }}
           
-      - name: copy file via ssh password
-        uses: appleboy/scp-action@v0.1.7
-        with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USER }}
-          password: ${{ secrets.PASSWORD }}
-          port: ${{ secrets.SSH_PORT }}
-          source: "build/*"
-          target: ${{ secrets.SSH_DIR }}
-          timeout: 5m
-          overwrite: true
-          rm: true
-        
-#      - name: Publish
-#        uses: nogsantos/ssh-scp-deploy@v1.3.0
+#      - name: copy file via ssh password
+#        uses: appleboy/scp-action@v0.1.7
 #        with:
-#          src: ./build/*
 #          host: ${{ secrets.SSH_HOST }}
-#          remote: ${{ secrets.SSH_DIR }}
+#          username: ${{ secrets.SSH_USER }}
+#          password: ${{ secrets.PASSWORD }}
 #          port: ${{ secrets.SSH_PORT }}
-#          user: ${{ secrets.SSH_USER }}
-#          key: ${{ secrets.SSH_KEY }}
+#          source: "build/*"
+#          target: ${{ secrets.SSH_DIR }}
+#          timeout: 5m
+#          overwrite: true
+#          rm: true
+        
+      - name: Publish
+        uses: nogsantos/ssh-scp-deploy@v1.3.0
+        with:
+          src: ./build/*
+          host: ${{ secrets.SSH_HOST }}
+          remote: ${{ secrets.SSH_DIR }}
+          port: ${{ secrets.SSH_PORT }}
+          user: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_KEY }}
