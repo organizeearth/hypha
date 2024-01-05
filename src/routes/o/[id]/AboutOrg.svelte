@@ -7,7 +7,6 @@
     translateToMarker,
     defaultFilterMethod,
     filterOptions,
-    defaultClusterMethod,
   } from "$lib/dash/dashUtils";
   import { filterRefs } from "$lib/dataUtils";
   export let data = {};

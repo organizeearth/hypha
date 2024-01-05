@@ -95,7 +95,8 @@
   .position-front {
     z-index: 9999;
   }
+  /*
   .mapboxgl-popup-content {
     background: transparent;
-  }
+  }*/
 </style>

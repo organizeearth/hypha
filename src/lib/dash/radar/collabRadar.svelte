@@ -6,10 +6,10 @@
   import { colorLegend } from "$lib/dash/dashUtils";
   import SwatchContrast from "../SwatchContrast.svelte";
 
-  let involvementLegend = [
+  let proximityLegend = [
     { label: "Frontline", id: 1 },
-    { label: "Collab", id: 2 },
-    { label: "Non-collab", id: 3 },
+    { label: "Solidarity", id: 2 },
+    { label: "Support", id: 3 },
   ];
 
   export let filteredOrgs = [];
@@ -26,12 +26,12 @@
   </div>
   <div class="row">
     <div class="col">
-      <h5>Involvement</h5>
+      <h5>Proximity</h5>
       <div class="row">
         <div class="col" />
         <div class="col">
           <ul class="contrast-legend">
-            {#each involvementLegend as { id, label }}
+            {#each proximityLegend as { id, label }}
               <SwatchContrast {id} {label} />
             {/each}
           </ul>
@@ -41,8 +41,8 @@
     <div class="col">
       <h5>Sector</h5>
       <ul class="color-legend">
-        {#each colorLegend as { color, label }}
-          <ColorSwatch {color} {label} />
+        {#each colorLegend as { color, label, method }}
+          <ColorSwatch {color} {label} sector={method} />
         {/each}
       </ul>
     </div>

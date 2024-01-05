@@ -72,7 +72,7 @@
 
 <p>Collab Graph</p>
 
-<!-- Created with Inkscape (http://www.inkscape.org/) -->
+<!-- Created with Inkscape (http://www.inkscape.org/) 
 
 <svg
   viewBox="{va} {vb} {vc} {vd}"
@@ -93,9 +93,6 @@
       cx="90.223732"
       cy="180.68591"
       r="10.618354"
-      inkscape:export-filename="/home/oren/Desktop/diagram-home.svg"
-      inkscape:export-xdpi="173.84"
-      inkscape:export-ydpi="173.84"
     />
     <circle
       class:hidden="{hideCollab === "Green Faith"}"
@@ -104,9 +101,6 @@
       cx="59.209667"
       cy="138.35254"
       r="10.618354"
-      inkscape:export-filename="/home/oren/Desktop/diagram-home.svg"
-      inkscape:export-xdpi="173.84"
-      inkscape:export-ydpi="173.84"
     />
     <circle
     class:hidden="{hideCollab === "Food & Farming"}"
@@ -193,7 +187,7 @@
       ></text
     >
   </g>
-</svg>
+</svg> -->
 
 <!--
 {#if collabsWithOrgs.length}
@@ -519,10 +513,11 @@ function showGraphLatex() {
   document.getElementById("svg-output").textContent = v + e;
   //recall mathjax
 }
--->
 
 <style>
   .hidden {
     display: none !important;
   }
 </style>
+
+-->

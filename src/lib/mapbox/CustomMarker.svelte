@@ -89,10 +89,10 @@
   }
 </script>
 
-<div on:click bind:this={element}>
+<button type="button" on:click bind:this={element}>
   <slot />
-</div>
+</button>
 
-<div on:click class="popup" bind:this={elementPopup}>
+<div on:click on:keyup class="popup" bind:this={elementPopup} role="button" tabindex="0">
   <slot name="popup" />
 </div>

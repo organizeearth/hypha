@@ -1,4 +1,5 @@
 <script>
+  import { activeMethod, activeSector, activeArena } from "./stores";
   import EntityHeading from "$lib/entityHeading.svelte";
   import Map from "$lib/mapbox/Map.svelte";
   import Radio from "$lib/Radio.svelte";
@@ -6,13 +7,31 @@
   import CollabRadar from "$lib/dash/radar/collabRadar.svelte";
   import OrganicText from "$lib/organicText.svelte";
 
+  /** @type string */
+  let activeMethod_value;
+  activeMethod.subscribe((value) => {
+    activeMethod_value = value;
+  });
+
+  /** @type string */
+  let activeSector_value;
+  activeSector.subscribe((value) => {
+    activeSector_value = value;
+  });
+
+  /** @type string */
+  let activeArena_value;
+  activeArena.subscribe((value) => {
+    activeArena_value = value;
+  });
+
   import {
     isFilteredIn,
     hasLatLng,
     translateToMarker,
     defaultFilterMethod,
-    filterOptions,
-    getMethodsWithOrgCounts
+    filterOptions as networkOptions,
+    getMethodsWithOrgCounts,
   } from "$lib/dash/dashUtils";
 
   /** @type {import('./$types').PageData} */
@@ -22,12 +41,12 @@
   const calendarUrl = "https://boulder.earth/calendar/";
   const bulletinText = "Take action now";
   const bulletinUrl = "https://boulder.earth/actions-for-impact/";
-  
+
   let activeYear = 2023;
   const years = [2022, 2023, 2024, 2025, 2026, 2027, 2028, 2029];
   const setActiveYear = (year) => {
     activeYear = year;
-  }
+  };
   $: wegotorgs = data && typeof data.orgs !== "undefined";
   $: wegotacollaborative = data && typeof data.collab != "undefined";
   $: wegotcollaborgs =
@@ -40,24 +59,25 @@
     : [];
 
   $: orgs = wegotorgs
-    ? filterMethod == "collab"
+    ? networkSelected == "collab"
       ? collaborgs
       : data.orgs
     : [];
 
   let activeOrgId;
 
-  let filterMethod = defaultFilterMethod;
+  let networkSelected = defaultFilterMethod;
   /** @type {string} */
   let selectedArena;
   /** @type {string} */
   let selectedSector;
   /** @type {string} */
   let selectedMethod;
+
   $: filters = {
     arena: selectedArena,
     sector: selectedSector,
-    method: selectedMethod,
+    method: activeSector_value,
   };
 
   function filterChange() {
@@ -66,9 +86,10 @@
     orgs = orgs;
     filteredOrgs = filteredOrgs;
     filteredMarkers = filteredMarkers;
+    console.log({ filters, orgs, filteredOrgs, filteredMarkers });
   }
 
-  $: filteredOrgs = orgs.filter((o) => isFilteredIn(o, filters));
+  $: filteredOrgs = orgs.filter((o) => isFilteredIn(o, activeArena_value, activeMethod_value, activeSector_value));
   $: filteredMarkers = filteredOrgs
     .filter((o) => hasLatLng(o))
     .map((o) => translateToMarker(o));
@@ -134,7 +155,7 @@
       <div class="dash-head-item">
         <label
           >Arena
-          <select bind:value={selectedArena} on:change={() => filterChange()}>
+          <select bind:value={activeArena_value} on:change={() => filterChange()}>
             <option selected value="ANY"> Any</option>
             {#each data.arenas as arena}
               <option value={arena.id}>{arena.name}</option>
@@ -145,7 +166,7 @@
       <div class="dash-head-item">
         <label
           >Sector
-          <select bind:value={selectedSector} on:change={() => filterChange()}>
+          <select bind:value={activeSector_value} on:change={() => filterChange()}>
             <option selected value="ANY"> Any</option>
             {#each data.sectors as sector}
               <option value={sector.id}>{sector.name}</option>
@@ -156,26 +177,39 @@
       <div class="dash-head-item">
         <label
           >Method
-          <select bind:value={selectedMethod} on:change={() => filterChange()}>
+          <select bind:value={activeMethod_value} on:change={() => filterChange()}>
             <option selected value="ANY"> Any</option>
             {#each data.methods as method}
               <option value={method.id}>{method.name}</option>
             {/each}
           </select>
         </label>
+        <!--
+        <br><br><br>
+        <label
+          >Proximity
+          <select bind:value={activeMethod_value} on:change={() => filterChange()}>
+            <option selected value="ANY"> Any</option>
+            {#each data.methods as method}
+              <option value={method.id}>{method.name}</option>
+            {/each}
+          </select>
+        </label>
+        -->
       </div>
       <div class="dash-head-item">
         <Radio
-          options={filterOptions}
-          legend="Display"
-          bind:userSelected={filterMethod}
+          options={networkOptions}
+          legend="Network organizations"
+          bind:userSelected={networkSelected}
         />
+        <p>{filteredOrgs.length} matching orgs</p>
       </div>
     </div>
   </section>
 
   <div class="row-of-two">
-    <CollabRadar filteredOrgs activeOrgId ></CollabRadar>
+    <CollabRadar filteredOrgs activeOrgId selectedMethod></CollabRadar>
     <section>
       <OrganicText tagType="h1" textContent="Map (Where?)" />
       <Map
@@ -188,6 +222,71 @@
     </section>
   </div>
 
+  <div class="row-of-two">
+    <section>
+      <table>
+        <th>Name</th>
+        <th>Sectors</th>
+        <th>Colorcategory</th>
+        <th>Color</th>
+        {#each filteredMarkers as marker}
+          <tr>
+            <td>{marker.name}</td>
+            <td>{marker.sectors.length}</td>
+            <td>{marker.colorcategory}</td>
+            <td
+              style="color: white; font-weight: bold; background: {marker.marker
+                .color};">{marker.marker.color}</td
+            >
+          </tr>
+        {/each}
+      </table>
+    </section>
+  </div>
+  <div class="row-of-two">
+    <section>
+      <table>
+        <th>Name</th>
+        <th>Sectors</th>
+        <th>Colorcategory</th>
+        <th>Color</th>
+        {#each filteredOrgs as org}
+          <tr on:click="{() => console.log(org)}">
+            <td>{org.name}</td>
+            <td>{org.sectors.length}</td>
+            <td>{org.colorcategory}</td>
+            <td
+              style="color: white; font-weight: bold; background: {org.color};"
+              >{org.color}</td
+            >
+          </tr>
+        {/each}
+      </table>
+    </section>
+  </div>
+  <div class="row-of-two">
+    <section>
+      <table>
+        <th>Name</th>
+        <th>Sectors</th>
+        <th>Colorcategory</th>
+        <th>Color</th>
+        {#each orgs as org}
+          <tr>
+            <td>{org.name}</td>
+            <td>{org.sectors.length}</td>
+            <td>{org.colorcategory}</td>
+            <td
+              style="color: white; font-weight: bold; background: {org.color};"
+              >{org.color}</td
+            >
+          </tr>
+        {/each}
+      </table>
+    </section>
+  </div>
+
+  <!--
   <div class="row-of-two">
     <section>
       <OrganicText tagType="h1" textContent="Skillsets (How?)" />
@@ -232,19 +331,18 @@
     </section>
     <section class="timeline">
       <OrganicText tagType="h1" textContent="Collective Timeline (When?)" />
-      <img src="/year-wheel-bg.png">
-      <h3>{activeYear}
-      </h3>
+      <img src="/year-wheel-bg.png" />
+      <h3>{activeYear}</h3>
       <div class="yearnav">
         {#each years as year}
-        <a class="year" on:click="{() => setActiveYear(year)}">
-          {"'" + (year - 2000)}
-        </a>
+          <a class="year" on:click={() => setActiveYear(year)}>
+            {"'" + (year - 2000)}
+          </a>
         {/each}
       </div>
       <Button text={calendarText} link={calendarUrl} external={true} />
     </section>
-  </div>
+  </div>-->
 </main>
 
 <style>
@@ -289,6 +387,7 @@
   section p {
     margin: 2em;
   }
+  /*
   .method-list {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -342,5 +441,5 @@
   .year:hover {
     text-decoration: none;
     cursor: pointer;
-  }
+  }*/
 </style>

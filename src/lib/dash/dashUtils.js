@@ -3,37 +3,38 @@ import { entities } from "$lib/entities";
 
 export const centerCircleId = 'recMQeRkiPRcQ6Fjw';
 
-export const isFilteredIn = (record, filters) => {
+export const isFilteredIn = (record, arena, method, sector) => {
   if (record.id === centerCircleId) {
     return true;
   }
+  console.log({record, arena, method, sector});
   if (
-    filters.arena === "ANY" &&
-    filters.sector === "ANY" &&
-    filters.method === "ANY"
+    arena === "ANY" &&
+    sector === "ANY" &&
+    method === "ANY"
   ) {
     return true;
   }
-  if (filters.arena !== "ANY") {
+  if (arena !== "ANY") {
     if (
       typeof record.arenas === "undefined" ||
-      !record.arenas.includes(filters.arena)
+      !record.arenas.includes(arena)
     ) {
       return false;
     }
   }
-  if (filters.sector !== "ANY") {
+  if (sector !== "ANY") {
     if (
       typeof record.sectors === "undefined" ||
-      !record.sectors.includes(filters.sector)
+      !record.sectors.includes(sector)
     ) {
       return false;
     }
   }
-  if (filters.method !== "ANY") {
+  if (method !== "ANY") {
     if (
       typeof record.methods === "undefined" ||
-      !record.methods.includes(filters.method)
+      !record.methods.includes(method)
     ) {
       return false;
     }
@@ -57,13 +58,14 @@ export const translateToMarker = (record) => {
   //   cat: record.colorcategory,
   //   color: entities.sectorColors[record.colorcategory],
   // });
+  const color = (record.sectors.length > 1) ? "gray" : entities.sectorColors[record.colorcategory];
   return {
     ...record,
     marker: {
       id: record.id,
       lat: record.lat || 40.04627940387934,
       lng: record.lng || -105.19855768328831,
-      color: entities.sectorColors[record.colorcategory],
+      color: color,
       label: record.name,
       popupClassName: "class-name",
     },
@@ -87,12 +89,12 @@ export const filterOptions = [
 ];
 
 export const colorLegend = [
-  { color: "rgba(156, 46, 100, 1)", label: "Grassroots" },
-  { color: "rgba(167, 44, 10, 1)", label: "Nonprofit" },
-  { color: "rgba(138, 72, 10, 1)", label: "Academia" },
-  { color: "rgba(107, 87, 16, 1)", label: "Faith-based" },
-  { color: "rgba(36, 98, 101, 1)", label: "Government" },
-  { color: "rgba(83, 81, 150, 1)", label: "Business" },
+  { color: "rgba(156, 46, 100, 1)", label: "Grassroots", method: {id: 'recRdF0TaAdUAj40V'}},
+  { color: "rgba(167, 44, 10, 1)", label: "Nonprofit", method: {id: 'rec6f2I3uJzgPOne6'} },
+  { color: "rgba(138, 72, 10, 1)", label: "Academia", method: {id: 'rec24VSkUdwdHXvAx'} },
+  { color: "rgba(107, 87, 16, 1)", label: "Faith-based", method: {id: 'recBkVRn23w2hfMgA'} },
+  { color: "rgba(36, 98, 101, 1)", label: "Government" , method: {id: 'recKEW8pPinfPIEOD'}},
+  { color: "rgba(83, 81, 150, 1)", label: "Business", method: {id: 'recsL1hjg6GlM4SXG'} },
   //{ color: 'rgb(119, 70, 132)', label: "Off the charts" },
 ];
 
