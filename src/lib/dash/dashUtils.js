@@ -7,7 +7,7 @@ export const isFilteredIn = (record, arena, method, sector) => {
   if (record.id === centerCircleId) {
     return true;
   }
-  console.log({record, arena, method, sector});
+  //console.log({record, arena, method, sector});
   if (
     arena === "ANY" &&
     sector === "ANY" &&
@@ -25,8 +25,8 @@ export const isFilteredIn = (record, arena, method, sector) => {
   }
   if (sector !== "ANY") {
     if (
-      typeof record.sectors === "undefined" ||
-      !record.sectors.includes(sector)
+      typeof record.sector === "undefined" ||
+      !record.sector.includes(sector)
     ) {
       return false;
     }
@@ -58,7 +58,7 @@ export const translateToMarker = (record) => {
   //   cat: record.colorcategory,
   //   color: entities.sectorColors[record.colorcategory],
   // });
-  const color = (record.sectors.length > 1) ? "gray" : entities.sectorColors[record.colorcategory];
+  const color = (record.sector.length > 1) ? "gray" : entities.sectorColors[record.colorcategory];
   return {
     ...record,
     marker: {

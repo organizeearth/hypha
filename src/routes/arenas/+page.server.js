@@ -30,7 +30,7 @@ export async function load({ params }) {
     const nets = await fetchRecords(base, networkConfig, networkFieldMap);
     const projects = await fetchRecords(base, projectConfig, projectFieldMap);
     const arenas = await fetchRecords(base, arenaConfig, arenaFieldMap);
-    const sectors = await fetchRecords(base, sectorConfig, sectorFieldMap);
+    const sector = await fetchRecords(base, sectorConfig, sectorFieldMap);
     const methods = await fetchRecords(base, methodConfig, methodFieldMap);
     if (orgs && collabs && nets) {
         const collab = collabs.find(c => c.id === id);
@@ -49,7 +49,7 @@ export async function load({ params }) {
                 project,
                 projects,
                 arenas,
-                sectors,
+                sector,
                 methods,
             };
         } catch (e) {

@@ -27,7 +27,7 @@ const orgFieldMap = [
   },
   { from: "Collaboration/ Group", to: "collabs" },
   { from: "Arenas", to: "arenas" },
-  { from: "Sectors", to: "sectors" },
+  { from: "Sector", to: "sector" },
   { from: "Methods", to: "methods" },
   { from: "Latitude", to: "lat", transform: (a) => cleanLat(a) },
   { from: "Longitude", to: "lng", transform: (a) => cleanLng(a) },
@@ -54,7 +54,7 @@ const collabFieldMap = [
   },
   { from: "Orgs", to: "orgs" },
   { from: "Arenas", to: "arenas" },
-  { from: "Sectors", to: "sectors" },
+  { from: "Sector", to: "sector" },
   { from: "Methods", to: "methods" },
   { from: "Description", to: "description" },
 ];
@@ -76,7 +76,7 @@ const networkFieldMap = [
 const projectFieldMap = [
   { from: "Name", to: "name" },
   { from: "Arenas", to: "arenas" },
-  { from: "Sectors", to: "sectors" },
+  { from: "Sector", to: "sector" },
   { from: "Methods", to: "methods" },
 ];
 
@@ -132,7 +132,7 @@ const orgConfig = {
       "Publishing Status",
       "Collaboration/ Group",
       "Arenas",
-      "Sectors",
+      "Sector",
       "Methods",
       "Latitude",
       "Longitude",
@@ -156,7 +156,7 @@ const collabConfig = {
       "Publishing Status",
       "Orgs",
       "Arenas",
-      "Sectors",
+      "Sector",
       "Methods",
       "Description",
     ],
@@ -185,7 +185,7 @@ const projectConfig = {
   selectConfig: {
     view: "Hypha published DO NOT EDIT",
     pageSize: 100,
-    fields: ["Name", "Arenas", "Sectors", "Methods"],
+    fields: ["Name", "Arenas", "Sector", "Methods"],
   },
 };
 

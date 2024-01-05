@@ -86,7 +86,7 @@
     orgs = orgs;
     filteredOrgs = filteredOrgs;
     filteredMarkers = filteredMarkers;
-    console.log({ filters, orgs, filteredOrgs, filteredMarkers });
+    //console.log({ filters, orgs, filteredOrgs, filteredMarkers });
   }
 
   $: filteredOrgs = orgs.filter((o) => isFilteredIn(o, activeArena_value, activeMethod_value, activeSector_value));
@@ -144,10 +144,10 @@
     <div class="dash-head-item">
       <OrganicText tagType="h1" textContent="Dashboard" />
 
-      <EntityHeading textContent={data.collab.name} entityType="collab" />
+      <EntityHeading textContent={data?.collab?.name} entityType="collab" />
       <div class="image-placeholder">
         <p>
-          {data.collab.description}
+          {data?.collab?.description}
         </p>
       </div>
     </div>
@@ -158,7 +158,7 @@
           <select bind:value={activeArena_value} on:change={() => filterChange()}>
             <option selected value="ANY"> Any</option>
             {#each data.arenas as arena}
-              <option value={arena.id}>{arena.name}</option>
+              <option value={arena.id}>{arena?.name}</option>
             {/each}
           </select>
         </label>
@@ -168,8 +168,8 @@
           >Sector
           <select bind:value={activeSector_value} on:change={() => filterChange()}>
             <option selected value="ANY"> Any</option>
-            {#each data.sectors as sector}
-              <option value={sector.id}>{sector.name}</option>
+            {#each data.sector as sector}
+              <option value={sector.id}>{sector?.name}</option>
             {/each}
           </select>
         </label>
@@ -180,7 +180,7 @@
           <select bind:value={activeMethod_value} on:change={() => filterChange()}>
             <option selected value="ANY"> Any</option>
             {#each data.methods as method}
-              <option value={method.id}>{method.name}</option>
+              <option value={method.id}>{method?.name}</option>
             {/each}
           </select>
         </label>
@@ -226,17 +226,17 @@
     <section>
       <table>
         <th>Name</th>
-        <th>Sectors</th>
+        <th>Sector</th>
         <th>Colorcategory</th>
         <th>Color</th>
         {#each filteredMarkers as marker}
           <tr>
-            <td>{marker.name}</td>
-            <td>{marker.sectors.length}</td>
-            <td>{marker.colorcategory}</td>
+            <td>{marker?.name}</td>
+            <td>{marker?.sector.length}</td>
+            <td>{marker?.colorcategory}</td>
             <td
-              style="color: white; font-weight: bold; background: {marker.marker
-                .color};">{marker.marker.color}</td
+              style="color: white; font-weight: bold; background: {marker?.marker
+                ?.color};">{marker?.marker?.color}</td
             >
           </tr>
         {/each}
@@ -247,17 +247,17 @@
     <section>
       <table>
         <th>Name</th>
-        <th>Sectors</th>
+        <th>Sector</th>
         <th>Colorcategory</th>
         <th>Color</th>
         {#each filteredOrgs as org}
           <tr on:click="{() => console.log(org)}">
-            <td>{org.name}</td>
-            <td>{org.sectors.length}</td>
-            <td>{org.colorcategory}</td>
+            <td>{org?.name}</td>
+            <td>{org?.sector.length}</td>
+            <td>{org?.colorcategory}</td>
             <td
-              style="color: white; font-weight: bold; background: {org.color};"
-              >{org.color}</td
+              style="color: white; font-weight: bold; background: {org?.color};"
+              >{org?.color}</td
             >
           </tr>
         {/each}
@@ -268,17 +268,17 @@
     <section>
       <table>
         <th>Name</th>
-        <th>Sectors</th>
+        <th>Sector</th>
         <th>Colorcategory</th>
         <th>Color</th>
         {#each orgs as org}
           <tr>
-            <td>{org.name}</td>
-            <td>{org.sectors.length}</td>
-            <td>{org.colorcategory}</td>
+            <td>{org?.name}</td>
+            <td>{org?.sector.length}</td>
+            <td>{org?.colorcategory}</td>
             <td
-              style="color: white; font-weight: bold; background: {org.color};"
-              >{org.color}</td
+              style="color: white; font-weight: bold; background: {org?.color};"
+              >{org?.color}</td
             >
           </tr>
         {/each}

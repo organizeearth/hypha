@@ -6,7 +6,7 @@
   import { onMount } from 'svelte';
 
   const dashboardId = "recGRgd9dx5YTov2E";
-  const dashboardUrl = `/dashboard/${dashboardId}.html`;
+  const dashboardUrl = `/dashboard/${dashboardId}`;
 
   let currentPath = $page.url.pathname;
 </script>
@@ -18,11 +18,12 @@
     </a>
   </div>
 
+  <!-- removed data-sveltekit-preload-data-->
   <div class="corner">
     {#if currentPath !== dashboardUrl || $page.url.pathname !== dashboardUrl}
-      <a href={dashboardUrl} data-sveltekit-reload data-sveltekit-preload-data>Log into dash</a>
+      <a href="{dashboardUrl}.html" data-sveltekit-reload>Log into dash</a>
     {:else}
-      <a href="/" data-sveltekit-reload data-sveltekit-preload-data>Log out</a>
+      <a href="/" data-sveltekit-reload>Log out</a>
     {/if}
   </div>
 </header>

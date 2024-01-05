@@ -17,7 +17,7 @@
     .map((o) => translateToMarker(o));
 
   $: arenas = filterRefs(data?.arenas, org.arenas);
-  $: sectors = filterRefs(data?.sectors, org.sectors);
+  $: sector = filterRefs(data?.sector, org.sector);
   $: methods = filterRefs(data?.methods, org.methods);
   $: activeOrgId = org?.id;
 
@@ -64,7 +64,7 @@
       <OrganicText tagType="h1" textContent="Sector" />
       <section>
         <ul>
-          {#each sectors as sector}
+          {#each sector as sector}
             <li>{sector.name}</li>
           {/each}
         </ul>
