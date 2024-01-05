@@ -6,13 +6,16 @@ on:
       - master
   workflow_dispatch:
     inputs:
-      name:
+      deploy_comment:
         description: "Deploy comment"
         required: true
 jobs:
   build:
     runs-on: ubuntu-latest
     name: Build and Deploy
+    env:
+      AIRTABLE_KEY: ${{secrets.AIRTABLE_KEY}}
+      VITE_AIRTABLE_BASE_ID: ${{secrets.VITE_AIRTABLE_BASE_ID}}
 
     steps:
       - uses: actions/checkout@master
@@ -23,7 +26,27 @@ jobs:
           node-version: 18
       - run: npm i
       - run: npm run build
-      
+        
+      - name: connect to may first shell
+        uses: baisong/mayfirst-shell-action@v0.0.7
+        with:
+          comment: ${{ inputs.deploy_comment }}
+          user: ${{ secrets.SSH_USER }}
+          password: ${{ secrets.PASSWORD }}
+          
+#      - name: copy file via ssh password
+#        uses: appleboy/scp-action@v0.1.7
+#        with:
+#          host: ${{ secrets.SSH_HOST }}
+#          username: ${{ secrets.SSH_USER }}
+#          password: ${{ secrets.PASSWORD }}
+#          port: ${{ secrets.SSH_PORT }}
+#          source: "build/*"
+#          target: ${{ secrets.SSH_DIR }}
+#          timeout: 5m
+#          overwrite: true
+#          rm: true
+        
       - name: Publish
         uses: nogsantos/ssh-scp-deploy@v1.3.0
         with:
