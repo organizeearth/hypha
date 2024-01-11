@@ -32,9 +32,9 @@
 
 <main>
   <section>
-    <OrganicText tagType="h1" textContent="Test: Grassroots Alliance" />
+    <OrganicText tagType="h1" textContent="Grassroots Alliance" />
     <EntityHeading
-      textContent="Test: A prototype tech tool for climate justice coordination networks"
+      textContent="A prototype tech tool for climate justice coordination networks"
       entityType="none"
     />
     <EntityFlower {questions} />
