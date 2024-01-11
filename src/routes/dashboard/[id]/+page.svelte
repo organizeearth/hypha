@@ -142,7 +142,7 @@
 <main>
   <section class="dash-head">
     <div class="dash-head-item">
-      <OrganicText tagType="h1" textContent="Dashboard" />
+      <OrganicText tagType="h1" textContent="Test: Dashboard" />
 
       <EntityHeading textContent={data?.collab?.name} entityType="collab" />
       <div class="image-placeholder">
@@ -200,7 +200,7 @@
       <div class="dash-head-item">
         <Radio
           options={networkOptions}
-          legend="Network organizations"
+          legend="Test: Network organizations"
           bind:userSelected={networkSelected}
         />
         <p>{filteredOrgs.length} matching orgs</p>
