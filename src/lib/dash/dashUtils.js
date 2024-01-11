@@ -80,14 +80,17 @@ export const networkOptions = [
   {
     value: "active",
     label: "Active collaborators",
+    shortLabel: "Active"
   },
   {
     value: "potential",
     label: "Potential collaborators",
+    shortLabel: "Potential"
   },
   {
     value: "all",
     label: "Whole network",
+    shortLabel: "Any"
   },
 ];
 

@@ -1,12 +1,11 @@
 <script>
   /**
-   * @TODO Mapbox documentation
-   * @TODO Airtable field descriptions
-   * @TODO Debug dashboard data.collab
+   * @TODO Stores for proximity, involvement
    * @TODO Filter bug
    * @TODO Radar
    * @TODO Network > Orgs filters
    * @TODO Collab > Orgs filters
+   * @TODO Airtable field descriptions
    * @TODO Debug dashboard URL trailing slash
    * @TODO Collab Nested List
   */

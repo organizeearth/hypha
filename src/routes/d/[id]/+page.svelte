@@ -3,6 +3,7 @@
     activeMethod,
     activeSector,
     activeArena,
+    activeNetwork,
     activeOrgId,
   } from "./stores";
   import EntityHeading from "$lib/entityHeading.svelte";
@@ -31,6 +32,12 @@
   });
 
   /** @type string */
+  let activeNetwork_value;
+  activeNetwork.subscribe((value) => {
+    activeNetwork_value = value;
+  });
+
+  /** @type string */
   let activeOrgId_value;
   activeOrgId.subscribe((value) => {
     activeOrgId_value = value;
@@ -41,7 +48,7 @@
     hasLatLng,
     translateToMarker,
     defaultNetwork,
-    networkOptions as networkOptions,
+    networkOptions,
     getMethodsWithOrgCounts,
   } from "$lib/dash/dashUtils";
 
@@ -81,6 +88,7 @@
     arena: activeArena_value,
     sector: activeSector_value,
     method: activeSector_value,
+    network: activeNetwork_value,
   };
 
   function filterChange() {
@@ -169,18 +177,16 @@
             {/each}
           </select>
         </label>
-        <!--
               <br><br><br>
               <label
                 >Proximity
-                <select bind:value={activeMethod_value} on:change={() => filterChange()}>
+                <select bind:value={activeNetwork_value} on:change={() => filterChange()}>
                   <option selected value="ANY"> Any</option>
-                  {#each data.methods as method}
-                    <option value={method.id}>{method.name}</option>
+                  {#each networkOptions as {shortLabel, value}}
+                    <option value={value}>{shortLabel}</option>
                   {/each}
                 </select>
               </label>
-              -->
       </div>
       <div class="dash-head-item">
         <Radio
