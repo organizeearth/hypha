@@ -25,12 +25,12 @@
     network: {
       label: data?.nets[0]?.name,
       address: "/n/" + data?.nets[0]?.id,
-      stewards: "Hive Pollinators",
+      stewards: "Test: Hive Pollinators",
     },
     collab: {
       label: data?.collabs[0]?.name,
       address: "/c/" + data?.collabs[0]?.id,
-      stewards: "",
+      stewards: "Test: Collab Steward",
     },
     org: {
       label: "Philanthropiece",
