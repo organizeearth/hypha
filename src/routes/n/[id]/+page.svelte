@@ -32,8 +32,8 @@
   const questions = [
     {
       order: 0,
-      q: "Test: why",
-      a: "Test: To foster collaboration and connectivity for justice-based climate action and impact in Boulder County, Colorado. To inform, coordinate, and incentivize collaboration across the climate justice movement, shifting the paradigm of how communities work better together.",
+      q: "why",
+      a: "To foster collaboration and connectivity for justice-based climate action and impact in Boulder County, Colorado. To inform, coordinate, and incentivize collaboration across the climate justice movement, shifting the paradigm of how communities work better together.",
     },
     {
       order: 1,
