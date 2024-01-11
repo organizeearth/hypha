@@ -1,7 +1,12 @@
 <script>
-  import { activeMethod, activeSector, activeArena } from "./stores";
+  import {
+    activeMethod,
+    activeSector,
+    activeArena,
+    activeOrgId,
+  } from "./stores";
   import EntityHeading from "$lib/entityHeading.svelte";
-  import Map from "$lib/mapbox/Map.svelte";
+  import Map from "./Map.svelte";
   import Radio from "$lib/Radio.svelte";
   import Button from "$lib/Button.svelte";
   import CollabRadar from "$lib/dash/radar/collabRadar.svelte";
@@ -23,6 +28,12 @@
   let activeArena_value;
   activeArena.subscribe((value) => {
     activeArena_value = value;
+  });
+
+  /** @type string */
+  let activeOrgId_value;
+  activeOrgId.subscribe((value) => {
+    activeOrgId_value = value;
   });
 
   import {
@@ -64,19 +75,11 @@
       : data.orgs
     : [];
 
-  let activeOrgId;
-
   let networkSelected = defaultNetwork;
-  /** @type {string} */
-  let selectedArena;
-  /** @type {string} */
-  let selectedSector;
-  /** @type {string} */
-  let selectedMethod;
 
   $: filters = {
-    arena: selectedArena,
-    sector: selectedSector,
+    arena: activeArena_value,
+    sector: activeSector_value,
     method: activeSector_value,
   };
 
@@ -89,7 +92,9 @@
     //console.log({ filters, orgs, filteredOrgs, filteredMarkers });
   }
 
-  $: filteredOrgs = orgs.filter((o) => isFilteredIn(o, activeArena_value, activeMethod_value, activeSector_value));
+  $: filteredOrgs = orgs.filter((o) =>
+    isFilteredIn(o, activeArena_value, activeMethod_value, activeSector_value)
+  );
   $: filteredMarkers = filteredOrgs
     .filter((o) => hasLatLng(o))
     .map((o) => translateToMarker(o));
@@ -104,40 +109,11 @@
     })
     .filter((m) => m.orgCount > 0);
 
-  const trim = (text, max) => {
-    if (text.length <= max) {
-      return text;
-    }
-    return text.substring(0, max) + "...";
-  };
-
-  const handleMethodChipClick = (method) => {
-    if (method.id === selectedMethod) {
-      selectedMethod = "ANY";
-    } else {
-      selectedMethod = method.id;
-    }
-  };
-
   function handleActivate(event) {
     //console.log({ id2: event.detail.id });
-    activeOrgId = event.detail.id;
-  }
-  function handleActivateForce(event) {
-    //console.log({ id3: event.detail.id });
-    //console.log({ rankedMethods, selectedMethod });
-    let marker = document.getElementById(event.detail.id);
-    //console.log({ marker });
-    if (marker) {
-      marker.click();
-    }
+    activeOrgId.set(event.detail.id);
   }
 </script>
-
-<svelte:head>
-  <title>Hypha Blueprint</title>
-  <meta name="description" content="Svelte demo app" />
-</svelte:head>
 
 <main>
   <section class="dash-head">
@@ -155,7 +131,10 @@
       <div class="dash-head-item">
         <label
           >Arena
-          <select bind:value={activeArena_value} on:change={() => filterChange()}>
+          <select
+            bind:value={activeArena_value}
+            on:change={() => filterChange()}
+          >
             <option selected value="ANY"> Any</option>
             {#each data.arenas as arena}
               <option value={arena.id}>{arena?.name}</option>
@@ -166,7 +145,10 @@
       <div class="dash-head-item">
         <label
           >Sector
-          <select bind:value={activeSector_value} on:change={() => filterChange()}>
+          <select
+            bind:value={activeSector_value}
+            on:change={() => filterChange()}
+          >
             <option selected value="ANY"> Any</option>
             {#each data.sector as sector}
               <option value={sector.id}>{sector?.name}</option>
@@ -177,7 +159,10 @@
       <div class="dash-head-item">
         <label
           >Method
-          <select bind:value={activeMethod_value} on:change={() => filterChange()}>
+          <select
+            bind:value={activeMethod_value}
+            on:change={() => filterChange()}
+          >
             <option selected value="ANY"> Any</option>
             {#each data.methods as method}
               <option value={method.id}>{method?.name}</option>
@@ -185,17 +170,17 @@
           </select>
         </label>
         <!--
-        <br><br><br>
-        <label
-          >Proximity
-          <select bind:value={activeMethod_value} on:change={() => filterChange()}>
-            <option selected value="ANY"> Any</option>
-            {#each data.methods as method}
-              <option value={method.id}>{method.name}</option>
-            {/each}
-          </select>
-        </label>
-        -->
+              <br><br><br>
+              <label
+                >Proximity
+                <select bind:value={activeMethod_value} on:change={() => filterChange()}>
+                  <option selected value="ANY"> Any</option>
+                  {#each data.methods as method}
+                    <option value={method.id}>{method.name}</option>
+                  {/each}
+                </select>
+              </label>
+              -->
       </div>
       <div class="dash-head-item">
         <Radio
@@ -203,13 +188,14 @@
           legend="Network organizations"
           bind:userSelected={networkSelected}
         />
-        <p>{filteredOrgs.length} matching orgs</p>
+        <p>{filteredOrgs.length} on radar</p>
+        <p>{filteredMarkers.length} on map</p>
       </div>
     </div>
   </section>
 
   <div class="row-of-two">
-    <CollabRadar filteredOrgs activeOrgId selectedMethod></CollabRadar>
+    <CollabRadar filteredOrgs></CollabRadar>
     <section>
       <OrganicText tagType="h1" textContent="Map (Where?)" />
       <Map
@@ -235,8 +221,8 @@
             <td>{marker?.sector.length}</td>
             <td>{marker?.colorcategory}</td>
             <td
-              style="color: white; font-weight: bold; background: {marker?.marker
-                ?.color};">{marker?.marker?.color}</td
+              style="color: white; font-weight: bold; background: {marker
+                ?.marker?.color};">{marker?.marker?.color}</td
             >
           </tr>
         {/each}
@@ -251,7 +237,7 @@
         <th>Colorcategory</th>
         <th>Color</th>
         {#each filteredOrgs as org}
-          <tr on:click="{() => console.log(org)}">
+          <tr on:click={() => console.log(org)}>
             <td>{org?.name}</td>
             <td>{org?.sector.length}</td>
             <td>{org?.colorcategory}</td>
@@ -285,64 +271,6 @@
       </table>
     </section>
   </div>
-
-  <!--
-  <div class="row-of-two">
-    <section>
-      <OrganicText tagType="h1" textContent="Skillsets (How?)" />
-      <ul class="method-list">
-        {#each rankedMethods as method}
-          <li
-            class:active={method.id === selectedMethod}
-            on:click={() => handleMethodChipClick(method)}
-          >
-            <span class="name">{trim(method.name, 20)}</span><span class="count"
-              >{method.orgCount}</span
-            >
-          </li>
-        {/each}
-      </ul>
-    </section>
-    <section>
-      <OrganicText tagType="h1" textContent="Resource Library (Why?)" />
-      <OrganicText
-        tagType="h1"
-        textContent="(coming soon)"
-        color="rgba(15, 0, 127, 0.5)"
-      />
-      <p>Browse learning resources by topic at Boulder.Earth</p>
-      <Button
-        text="View example topic"
-        link="https://boulder.earth/cmap/circular-economy/"
-        external={true}
-      />
-    </section>
-  </div>
-  <div class="row-of-two">
-    <section>
-      <OrganicText tagType="h1" textContent="Bulletin board" />
-      <OrganicText
-        tagType="h1"
-        textContent="(coming soon)"
-        color="rgba(15, 0, 127, 0.5)"
-      />
-      <p>View timely resources and ways to take action at Boulder.Earth</p>
-      <Button text={bulletinText} link={bulletinUrl} external={true} />
-    </section>
-    <section class="timeline">
-      <OrganicText tagType="h1" textContent="Collective Timeline (When?)" />
-      <img src="/year-wheel-bg.png" />
-      <h3>{activeYear}</h3>
-      <div class="yearnav">
-        {#each years as year}
-          <a class="year" on:click={() => setActiveYear(year)}>
-            {"'" + (year - 2000)}
-          </a>
-        {/each}
-      </div>
-      <Button text={calendarText} link={calendarUrl} external={true} />
-    </section>
-  </div>-->
 </main>
 
 <style>
@@ -387,59 +315,62 @@
   section p {
     margin: 2em;
   }
+  section .dash-head-item p {
+    margin: 0;
+  }
   /*
-  .method-list {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: auto auto auto auto auto auto auto;
-    grid-auto-flow: column;
-    gap: 0.5em;
-    margin: 0 1em 2em;
-  }
-  .method-list li {
-    list-style-type: none;
-    display: flex;
-    padding: 0.25em 0.5em;
-    border-radius: 1em;
-    border: 1px solid var(--color-theme-1);
-    color: black;
-    font-weight: bold;
-    cursor: pointer;
-  }
-  .method-list li.active {
-    border-width: 3px;
-  }
-  .method-list li span {
-    flex: 4;
-  }
-  .method-list li span.name {
-    font-size: 14px;
-    align-self: center;
-  }
-  .method-list li span.count {
-    flex: 1;
-    text-align: center;
-    align-self: center;
-  }
-  .timeline h3 {
-    margin-top: -275px;
-    margin-bottom: 275px;
-    font-size: 3em;
-  }
-  .yearnav {
-    display: flex;
-    flex-direction: row;
-    margin-bottom: 1em;
-  }
-  .year {
-    flex: 1;
-    border: 1px solid black;
-    border-radius: 50%;
-    margin: 0.25em;
-    padding: 0.75em;
-  }
-  .year:hover {
-    text-decoration: none;
-    cursor: pointer;
-  }*/
+    .method-list {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: auto auto auto auto auto auto auto;
+      grid-auto-flow: column;
+      gap: 0.5em;
+      margin: 0 1em 2em;
+    }
+    .method-list li {
+      list-style-type: none;
+      display: flex;
+      padding: 0.25em 0.5em;
+      border-radius: 1em;
+      border: 1px solid var(--color-theme-1);
+      color: black;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .method-list li.active {
+      border-width: 3px;
+    }
+    .method-list li span {
+      flex: 4;
+    }
+    .method-list li span.name {
+      font-size: 14px;
+      align-self: center;
+    }
+    .method-list li span.count {
+      flex: 1;
+      text-align: center;
+      align-self: center;
+    }
+    .timeline h3 {
+      margin-top: -275px;
+      margin-bottom: 275px;
+      font-size: 3em;
+    }
+    .yearnav {
+      display: flex;
+      flex-direction: row;
+      margin-bottom: 1em;
+    }
+    .year {
+      flex: 1;
+      border: 1px solid black;
+      border-radius: 50%;
+      margin: 0.25em;
+      padding: 0.75em;
+    }
+    .year:hover {
+      text-decoration: none;
+      cursor: pointer;
+    }*/
 </style>

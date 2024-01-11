@@ -1,15 +1,12 @@
 <script>
-  import {
-    Map,
-    Geocoder,
-    Marker,
-    controls,
-  } from "svelte-mapbox-4-temp/components";
+  import { activeOrgId } from "./stores.js";
+  import { Map, controls } from "svelte-mapbox-4-temp/components";
   import { entities } from "$lib/entities.js";
   import BaseballCard from "$lib/BaseballCard.svelte";
   import CustomMarker from "$lib/mapbox/CustomMarker.svelte";
 
   /**
+   * @type Array.<object>
    */
   export let orgs;
   export let arenas;
@@ -21,7 +18,7 @@
     activeOrgId_value = value;
   });
 
-  //console.log({ orgs, collabs, arenas})
+  $: markers = orgs.map((a) => a.marker || {});
 
   const { GeolocateControl, NavigationControl, ScaleControl } = controls;
 
@@ -46,6 +43,7 @@
     // do something with `data`, it's the result returned from the mapbox event
   }
   function onReady() {
+    console.log({ orgs, markers });
     // console.log({ markers: orgs });
     mapComponent.setCenter([lng, lat], zoom);
     mapComponent.setZoom(zoom);
@@ -70,11 +68,10 @@
 >
   {#each orgs as org}
     <CustomMarker
-      id={org.id}
       on:activate
       on:click={() => flyTo(org)}
-      color={org.marker.color}
       {...org.marker}
+      color={org.marker.color}
     >
       <div class="content position-front" slot="popup">
         <!-- <a href="/o/{marker.id}">{marker.label}</a>-->
@@ -99,7 +96,7 @@
     z-index: 9999;
   }
   /*
-  .mapboxgl-popup-content {
-    background: transparent;
-  }*/
+    .mapboxgl-popup-content {
+      background: transparent;
+    }*/
 </style>

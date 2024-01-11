@@ -14,10 +14,6 @@
   const map = getMap();
   const mapbox = getMapbox();
 
-  function randomColour() {
-    return "white"; //Math.round(Math.random() * 255)
-  }
-
   function move(lng, lat) {
     marker.setLngLat({ lng, lat });
   }
@@ -29,7 +25,8 @@
   export let popupClassName = "beyonk-mapbox-popup";
   export let markerOffset = [0, 0];
   export let popupOffset = 10;
-  export let color = randomColour();
+  export let color = "";
+  export let sector = "";
   export let popup = true;
   export let popupOptions = {};
   export let markerOptions = {};
@@ -49,11 +46,14 @@
       {
         offset: markerOffset,
       },
-      element.hasChildNodes() ? { element } : { color }
+      //element.hasChildNodes() ? { element } : { color }
+      { color }
     );
+    console.log({ color });
     marker = new mapbox.Marker(Object.assign(namedParams, markerOptions));
-
     markerel = marker.getElement();
+    console.log({marker, markerel});
+    //markerel.classlist.add("sector-" + sector);
     markerel.addEventListener("click", (e) => {
       dispatchActivate();
       map.flyTo({ center: [lng, lat - flyOffsetLat], essential: true });

@@ -41,8 +41,8 @@
     <div class="col">
       <h5>Sector</h5>
       <ul class="color-legend">
-        {#each colorLegend as { color, label, method }}
-          <ColorSwatch {color} {label} sector={method} />
+        {#each colorLegend as { color, label, sector }}
+          <ColorSwatch {color} {label} {sector} />
         {/each}
       </ul>
     </div>

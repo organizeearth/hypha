@@ -1,10 +1,12 @@
 import { entities } from "$lib/entities";
 // isFilteredIn, hasLatLng, translateToMarker, defaultFilterMethod, filterOptions, colorLegend
 
+const alwaysShowCollab = false;
+
 export const centerCircleId = 'recMQeRkiPRcQ6Fjw';
 
 export const isFilteredIn = (record, arena, method, sector) => {
-  if (record.id === centerCircleId) {
+  if (alwaysShowCollab && record.id === centerCircleId) {
     return true;
   }
   //console.log({record, arena, method, sector});
@@ -66,14 +68,15 @@ export const translateToMarker = (record) => {
       lat: record.lat || 40.04627940387934,
       lng: record.lng || -105.19855768328831,
       color: color,
+      sector: (record.sector.length > 1) ? record.sector[0].id : 0,
       label: record.name,
       popupClassName: "class-name",
     },
   };
 };
 
-export const defaultFilterMethod = "active";
-export const filterOptions = [
+export const defaultNetwork = "active";
+export const networkOptions = [
   {
     value: "active",
     label: "Active collaborators",
@@ -89,12 +92,12 @@ export const filterOptions = [
 ];
 
 export const colorLegend = [
-  { color: "rgba(156, 46, 100, 1)", label: "Grassroots", method: {id: 'recRdF0TaAdUAj40V'}},
-  { color: "rgba(167, 44, 10, 1)", label: "Nonprofit", method: {id: 'rec6f2I3uJzgPOne6'} },
-  { color: "rgba(138, 72, 10, 1)", label: "Academia", method: {id: 'rec24VSkUdwdHXvAx'} },
-  { color: "rgba(107, 87, 16, 1)", label: "Faith-based", method: {id: 'recBkVRn23w2hfMgA'} },
-  { color: "rgba(36, 98, 101, 1)", label: "Government" , method: {id: 'recKEW8pPinfPIEOD'}},
-  { color: "rgba(83, 81, 150, 1)", label: "Business", method: {id: 'recsL1hjg6GlM4SXG'} },
+  { color: "rgba(156, 46, 100, 1)", label: "Grassroots", sector: {id: 'recRdF0TaAdUAj40V'}},
+  { color: "rgba(167, 44, 10, 1)", label: "Nonprofit", sector: {id: 'rec6f2I3uJzgPOne6'} },
+  { color: "rgba(138, 72, 10, 1)", label: "Academia", sector: {id: 'rec24VSkUdwdHXvAx'} },
+  { color: "rgba(107, 87, 16, 1)", label: "Faith-based", sector: {id: 'recBkVRn23w2hfMgA'} },
+  { color: "rgba(36, 98, 101, 1)", label: "Government" , sector: {id: 'recKEW8pPinfPIEOD'}},
+  { color: "rgba(83, 81, 150, 1)", label: "Business", sector: {id: 'recsL1hjg6GlM4SXG'} },
   //{ color: 'rgb(119, 70, 132)', label: "Off the charts" },
 ];
 

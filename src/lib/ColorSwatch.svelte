@@ -2,18 +2,20 @@
   export let color;
   export let label;
   export let sector;
-  import { activeSector } from "../routes/dashboard/[id]/stores";
+  import { activeSector } from "../routes/d/[id]/stores";
 
   let sector_value;
 
   activeSector.subscribe((value) => {
     sector_value = value;
   });
+
   function update() {
     activeSector.set(sector.id);
     console.log("Update!" + sector.id);
     console.log({ activeSector, sector, sector_value });
   }
+
   const faint = (color) => {
     return color.slice(0, -2) + "0.2)";
   };

@@ -5,8 +5,6 @@ import {
     orgFieldMap,
     collabConfig,
     collabFieldMap,
-    networkConfig,
-    networkFieldMap,
     projectConfig,
     projectFieldMap,
     arenaConfig,
@@ -15,33 +13,25 @@ import {
     sectorFieldMap,
     methodConfig,
     methodFieldMap,
-    linkConfig,
-    linkFieldMap,
-    bulletinConfig,
-    bulletinFieldMap,
-    benchmarkConfig,
-    benchmarkFieldMap,
     setupBase,
     fetchRecords
 } from '$lib/airtableConfig.js';
 
 /** @type {import('./$types').PageServerLoad} */
 export async function load({ params }) {
-    //console.log("Hellooooo");
     const id = params.id;
 
     let base = await setupBase(myBaseId);
     const orgs = await fetchRecords(base, orgConfig, orgFieldMap);
     const collabs = await fetchRecords(base, collabConfig, collabFieldMap);
-    const nets = await fetchRecords(base, networkConfig, networkFieldMap);
     const projects = await fetchRecords(base, projectConfig, projectFieldMap);
     const arenas = await fetchRecords(base, arenaConfig, arenaFieldMap);
     const sector = await fetchRecords(base, sectorConfig, sectorFieldMap);
     const methods = await fetchRecords(base, methodConfig, methodFieldMap);
-    if (orgs && collabs && nets) {
+
+    if (orgs && collabs) {
         const collab = collabs.find(c => c.id === id);
         const org = orgs.find(o => o.id === id);
-        const net = nets.find(n => n.id === id);
         const project = projects.find(p => p.id === id);
         try {
             return {
@@ -50,14 +40,12 @@ export async function load({ params }) {
                 orgs,
                 collab,
                 collabs,
-                net,
-                nets,
                 project,
                 projects,
                 arenas,
                 sector,
                 methods,
-            }
+            };
         } catch (e) {
             console.log(e.path);
         }
