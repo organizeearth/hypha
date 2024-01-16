@@ -4,7 +4,7 @@
    * @TODO Radar dot colors via CSS
    * @TODO Radar click behavior
    * @TODO Airtable field descriptions
-  */
+   */
   import OrganicText from "$lib/organicText.svelte";
   import EntityChip from "$lib/entityChip.svelte";
   import EntityFlower from "$lib/entityFlower.svelte";
@@ -15,6 +15,7 @@
   export let data;
 
   $: wegotnets = data && typeof data.nets !== "undefined";
+  $: collabs = data && typeof data.collabs !== "undefined" ? data.collabs : [];
 
   let activeTab = "networks";
   let tabs = ["networks", "legend"];
@@ -55,7 +56,7 @@
     </nav>
     <div class="spacer" />
   </div>
-  <section class="inner" class:hidden="{activeTab != "networks"}">
+  <section class="inner" class:hidden={activeTab != "networks"}>
     {#if wegotnets}
       <OrganicText textContent="Networks" />
       <p>There is currently <strong>1</strong> network using Hypha Blue</p>
@@ -77,11 +78,24 @@
     {:else}
       <p>No records</p>
     {/if}
+    <OrganicText textContent="Dashboards" />
+    <div class="flexbox">
+      {#each collabs as collab}
+        <EntityChip
+          address="/d/{collab.id}"
+          label={collab.name}
+          entityType="collab"
+        />
+      {/each}
+    </div>
   </section>
-  <section class="inner" class:hidden="{activeTab != "legend"}">
-      <EntityLegend data={data} />
+  <section class="inner" class:hidden={activeTab != "legend"}>
+    <EntityLegend {data} />
   </section>
 </main>
-
 <style>
+  .flexbox {
+    display: flex;
+    flex-direction: column;
+  }
 </style>

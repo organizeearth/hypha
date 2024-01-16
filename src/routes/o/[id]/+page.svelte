@@ -10,6 +10,7 @@
 
   /** @type {import('./$types').PageData} */
   export let data;
+  export let activeOrgId;
 
   $: org = data?.org || {};
 

@@ -19,11 +19,11 @@
   $: arenas = filterRefs(data?.arenas, org.arenas);
   $: sector = filterRefs(data?.sector, org.sector);
   $: methods = filterRefs(data?.methods, org.methods);
-  $: activeOrgId = org?.id;
+  //$: activeOrgId = org?.id;
 
   function handleActivate(event) {
     //console.log({ id2: event.detail.id });
-    activeOrgId = event.detail.id;
+    //activeOrgId = event.detail.id;
   }
 
   //console.log({ arenas, methods, sectors });
@@ -77,7 +77,6 @@
           orgs={filteredMarkers}
           collabs={data.collabs}
           arenas={data.arenas}
-          {activeOrgId}
           on:activate={handleActivate}
         />
       </section>

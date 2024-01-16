@@ -80,8 +80,8 @@
   const bulletinText = "Take action now";
   const bulletinUrl = "https://boulder.earth/actions-for-impact/";
 
-  let activeYear = 2023;
-  const years = [2022, 2023, 2024, 2025, 2026, 2027, 2028, 2029];
+  let activeYear = 2024;
+  const years = [2023, 2024, 2025, 2026, 2027, 2028, 2029, 2030];
   const setActiveYear = (year) => {
     activeYear = year;
   };
@@ -252,16 +252,16 @@
     </section>
   </div>
 
-  <div class="row-of-two">
+  <div class="row-of-two debug-drawer-wrapper">
     <section>
-      <table>
+      <table class="debug-drawer">
         <th>Name</th>
         <th>Sector</th>
         <th>Proximity</th>
         <th>Involvement</th>
         {#each filteredOrgs as org}
           <tr>
-            <td>{org?.name}</td>
+            <td><a href={"/o/" + org.id } target="_blank">{org?.name}</a></td>
             <td
               style="color: white; font-weight: bold; background: {org
                 ?.color};">{sectorToLabel(org.sector)}</td
@@ -477,5 +477,11 @@
     .year:hover {
       text-decoration: none;
       cursor: pointer;
+    }
+    .debug-drawer-wrapper {
+      display: inline; /* @TODO: Hide by changing to `display: none`*/
+    }
+    .debug-drawer {
+      width: 100%;
     }
 </style>

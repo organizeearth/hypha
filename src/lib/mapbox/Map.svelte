@@ -5,6 +5,7 @@
     Marker,
     controls,
   } from "svelte-mapbox-4-temp/components";
+  import { activeOrgId } from "../../routes/d/[id]/stores";
   import { entities } from "$lib/entities.js";
   import BaseballCard from "$lib/BaseballCard.svelte";
   import CustomMarker from "$lib/mapbox/CustomMarker.svelte";
