@@ -49,10 +49,10 @@
       //element.hasChildNodes() ? { element } : { color }
       { color }
     );
-    console.log({ color });
+    //console.log({ color });
     marker = new mapbox.Marker(Object.assign(namedParams, markerOptions));
     markerel = marker.getElement();
-    console.log({marker, markerel});
+    //console.log({marker, markerel});
     //markerel.classlist.add("sector-" + sector);
     markerel.addEventListener("click", (e) => {
       dispatchActivate();

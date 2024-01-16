@@ -3,7 +3,8 @@
     activeMethod,
     activeSector,
     activeArena,
-    activeNetwork,
+    activeProximity,
+    activeInvolvement,
     activeOrgId,
   } from "./stores";
   import EntityHeading from "$lib/entityHeading.svelte";
@@ -12,6 +13,17 @@
   import Button from "$lib/Button.svelte";
   import CollabRadar from "$lib/dash/radar/collabRadar.svelte";
   import OrganicText from "$lib/organicText.svelte";
+  import { onMount } from 'svelte';
+  import { invalidateAll } from '$app/navigation';
+  onMount(() => {
+		const interval = setInterval(() => {
+			invalidateAll();
+		}, 1000);
+
+		return () => {
+			clearInterval(interval);
+		};
+	});
 
   /** @type string */
   let activeMethod_value;
@@ -32,9 +44,15 @@
   });
 
   /** @type string */
-  let activeNetwork_value;
-  activeNetwork.subscribe((value) => {
-    activeNetwork_value = value;
+  let activeProximity_value;
+  activeProximity.subscribe((value) => {
+    activeProximity_value = value;
+  });
+
+  /** @type string */
+  let activeInvolvement_value;
+  activeInvolvement.subscribe((value) => {
+    activeInvolvement_value = value;
   });
 
   /** @type string */
@@ -47,9 +65,10 @@
     isFilteredIn,
     hasLatLng,
     translateToMarker,
-    defaultNetwork,
-    networkOptions,
+    proximityOptions,
+    involvementOptions,
     getMethodsWithOrgCounts,
+    loadOrgsForDash
   } from "$lib/dash/dashUtils";
 
   /** @type {import('./$types').PageData} */
@@ -66,43 +85,43 @@
     activeYear = year;
   };
   $: wegotorgs = data && typeof data.orgs !== "undefined";
-  $: wegotacollaborative = data && typeof data.collab != "undefined";
+  $: wegotacollaborative = data && typeof data.collab !== "undefined";
+  $: collab = wegotacollaborative ? data?.collab : {id: false};
   $: wegotcollaborgs =
     !!wegotacollaborative &&
     wegotorgs &&
     data.orgs.length > 0 &&
     data?.collab?.orgs?.length > 0;
+
   $: collaborgs = wegotcollaborgs
     ? data.orgs.filter((o) => data.collab?.orgs?.includes(o.id))
     : [];
 
-  $: orgs = wegotorgs
-    ? networkSelected == "collab"
-      ? collaborgs
-      : data.orgs
-    : [];
-
-  let networkSelected = defaultNetwork;
+  $: orgs = activeInvolvement_value === "active"
+      ? loadOrgsForDash(collaborgs, collab)
+      : loadOrgsForDash(data.orgs, collab);
 
   $: filters = {
     arena: activeArena_value,
     sector: activeSector_value,
     method: activeSector_value,
-    network: activeNetwork_value,
+    network: activeInvolvement_value,
   };
 
   function filterChange() {
-    //console.log("Change!");
+    console.log("Change!");
     filters = filters;
     orgs = orgs;
     filteredOrgs = filteredOrgs;
     filteredMarkers = filteredMarkers;
-    //console.log({ filters, orgs, filteredOrgs, filteredMarkers });
+    invalidateAll();
+    console.log({ filters, orgs, filteredOrgs, filteredMarkers });
   }
 
   $: filteredOrgs = orgs.filter((o) =>
-    isFilteredIn(o, activeArena_value, activeMethod_value, activeSector_value)
+    isFilteredIn(o, activeArena_value, activeMethod_value, activeSector_value, activeProximity_value, activeInvolvement_value)
   );
+
   $: filteredMarkers = filteredOrgs
     .filter((o) => hasLatLng(o))
     .map((o) => translateToMarker(o));
@@ -120,6 +139,7 @@
   function handleActivate(event) {
     //console.log({ id2: event.detail.id });
     activeOrgId.set(event.detail.id);
+    invalidateAll();
   }
 </script>
 
@@ -180,9 +200,8 @@
               <br><br><br>
               <label
                 >Proximity
-                <select bind:value={activeNetwork_value} on:change={() => filterChange()}>
-                  <option selected value="ANY"> Any</option>
-                  {#each networkOptions as {shortLabel, value}}
+                <select bind:value={activeProximity_value} on:change={() => filterChange()}>
+                  {#each proximityOptions as {shortLabel, value}}
                     <option value={value}>{shortLabel}</option>
                   {/each}
                 </select>
@@ -190,10 +209,12 @@
       </div>
       <div class="dash-head-item">
         <Radio
-          options={networkOptions}
+          options={involvementOptions}
           legend="Network organizations"
-          bind:userSelected={networkSelected}
+          on:change={() => filterChange()}
+          bind:userSelected={activeInvolvement_value}
         />
+        <br>
         <p>{filteredOrgs.length} on radar</p>
         <p>{filteredMarkers.length} on map</p>
       </div>
@@ -201,7 +222,7 @@
   </section>
 
   <div class="row-of-two">
-    <CollabRadar filteredOrgs></CollabRadar>
+    <CollabRadar {filteredOrgs}></CollabRadar>
     <section>
       <OrganicText tagType="h1" textContent="Map (Where?)" />
       <Map
@@ -323,6 +344,9 @@
   }
   section .dash-head-item p {
     margin: 0;
+  }
+  section {
+    background: white;
   }
   /*
     .method-list {

@@ -32,7 +32,8 @@ export async function load({ params }) {
     if (orgs && collabs) {
         const collab = collabs.find(c => c.id === id);
         const org = orgs.find(o => o.id === id);
-        const project = projects.find(p => p.id === id);
+        //console.log({collab});
+        //const project = projects.find(p => p.id === id);
         try {
             return {
                 id,
@@ -40,7 +41,6 @@ export async function load({ params }) {
                 orgs,
                 collab,
                 collabs,
-                project,
                 projects,
                 arenas,
                 sector,

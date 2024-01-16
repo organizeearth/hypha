@@ -1,6 +1,5 @@
 <script>
   /**
-   * @TODO Stores for proximity, involvement
    * @TODO Filter bug
    * @TODO Radar
    * @TODO Network > Orgs filters

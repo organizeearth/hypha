@@ -4,17 +4,17 @@
   export let cx = 100;
   export let cy = 100;
   export let r = 75;
-  export let stroke = "#ff0000";
+  export let stroke = "#999";
   export let fill = "transparent";
   export let points = [
     {
       label: "X",
-      stroke: "black",
+      stroke: "blue",
       n: 0,
     },
     {
       label: "A",
-      stroke: "green",
+      stroke: "rgba(36, 98, 101, 1)",
       n: 1,
     },
     {

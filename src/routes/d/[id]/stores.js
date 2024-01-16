@@ -5,10 +5,9 @@ import { writable } from 'svelte/store';
 export const activeArena = writable('ANY');
 export const activeMethod = writable('ANY');
 export const activeSector = writable('ANY');
-export const activeOrgId = writable('');
-
-// Network options: active, potential, whole
-export const activeNetwork = writable('active');
-
 // Proximity options: frontline, solidarity, support, ANY
 export const activeProximity = writable('ANY');
+// Network options: active, potential, whole
+export const activeInvolvement = writable('active');
+
+export const activeOrgId = writable('');

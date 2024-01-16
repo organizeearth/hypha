@@ -3,6 +3,17 @@
   export let label;
   export let sector;
   import { activeSector } from "../routes/d/[id]/stores";
+  import { onMount } from 'svelte';
+  import { invalidateAll } from '$app/navigation';
+  onMount(() => {
+		const interval = setInterval(() => {
+			invalidateAll();
+		}, 1000);
+
+		return () => {
+			clearInterval(interval);
+		};
+	});
 
   let sector_value;
 

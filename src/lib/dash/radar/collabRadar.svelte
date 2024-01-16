@@ -13,6 +13,8 @@
   ];
 
   export let filteredOrgs = [];
+  $: renderedDots = filteredOrgs;
+  console.log({renderedDots});
   export let activeOrgId;
   export let paneTitle = "Collab Network Radar";
 </script>
@@ -22,7 +24,7 @@
     <OrganicText tagType="h1" textContent={paneTitle} />
   </div>
   <div class="row full-width">
-    <CollabRadarDiagram dots={filteredOrgs} {activeOrgId} />
+    <CollabRadarDiagram {renderedDots} {activeOrgId} />
   </div>
   <div class="row">
     <div class="col">

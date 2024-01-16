@@ -20,6 +20,20 @@
 
   export let renderedDots = [];
 
+  const toDot = (org, index) => {
+    return {
+      ...org,
+      label: org.name,
+      stroke: org.color,
+      n: index
+    };
+  }
+
+  console.log({renderedDots});
+  $: frontlineRing = renderedDots.filter((o) => o.proximity === "Frontline").map((o, i) => toDot(o, i));
+  $: solidarityRing = renderedDots.filter((o) => o.proximity === "Solidarity").map((o, i) => toDot(o, i));
+  $: supportRing = renderedDots.filter((o) => o.proximity === "Support").map((o, i) => toDot(o, i));
+
   /**
    * @type {string}
    */
@@ -56,15 +70,48 @@
     return `${kp};${kp}`;
   };
 
+  const maxR = 140;
+  const minR = 60;
+  $: midR = (maxR + minR) / 2;
+
   $: cx = width / 3;
   $: cy = height / 2.5;
+
+  let points = [
+    {
+      label: "X",
+      stroke: "blue",
+      n: 0,
+    },
+    {
+      label: "A",
+      stroke: "rgba(36, 98, 101, 1)",
+      n: 1,
+    },
+    {
+      label: "B",
+      stroke: "brown",
+      n: 2,
+    },
+    {
+      label: "C",
+      stroke: "orange",
+      n: 3,
+    },
+    {
+      label: "D",
+      stroke: "red",
+      n: 4,
+    },
+  ];
+
 </script>
 
-<figure class="c" bind:clientWidth={width}>
+<figure class="c" bind:clientWidth={width} on:click={() => console.log({frontlineRing, points, renderedDots})}>
   <svg height="300px">
-    <CircleArc r="50" {cx} {cy} />
-    <CircleArc r="75" {cx} {cy} />
-    <CircleArc r="100" {cx} {cy} />
+    <CircleArc r={minR} {cx} {cy} points={frontlineRing} />
+    <CircleArc r={midR} {cx} {cy} points={solidarityRing} />
+    <CircleArc r={maxR} {cx} {cy} points={supportRing} />
   </svg>
   <!--
   <svg {width} {height}>

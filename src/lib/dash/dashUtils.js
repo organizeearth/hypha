@@ -5,15 +5,17 @@ const alwaysShowCollab = false;
 
 export const centerCircleId = 'recMQeRkiPRcQ6Fjw';
 
-export const isFilteredIn = (record, arena, method, sector) => {
+export const isFilteredIn = (record, arena, method, sector, proximity, involvement) => {
   if (alwaysShowCollab && record.id === centerCircleId) {
     return true;
   }
-  //console.log({record, arena, method, sector});
+  //console.log({record, arena, method, sector, proximity, involvement, collab});
   if (
     arena === "ANY" &&
     sector === "ANY" &&
-    method === "ANY"
+    method === "ANY" &&
+    proximity === "support" &&
+    involvement === "all"
   ) {
     return true;
   }
@@ -41,6 +43,25 @@ export const isFilteredIn = (record, arena, method, sector) => {
       return false;
     }
   }
+
+  if (proximity !== "ANY") {
+    if (
+      typeof record.proximity === "undefined" ||
+      !record.proximity.toLowerCase() == proximity.toLowerCase()
+    ) {
+      return false;
+    }
+  }
+
+  if (involvement !== "ANY") {
+    if (
+      typeof record.involvement === "undefined" ||
+      !record.involvement.toLowerCase() == involvement.toLowerCase()
+    ) {
+      return false;
+    }
+  }
+
   return true;
 };
 
@@ -75,8 +96,8 @@ export const translateToMarker = (record) => {
   };
 };
 
-export const defaultNetwork = "active";
-export const networkOptions = [
+export const defaultInvolvement = "active";
+export const involvementOptions = [
   {
     value: "active",
     label: "Active collaborators",
@@ -88,11 +109,35 @@ export const networkOptions = [
     shortLabel: "Potential"
   },
   {
-    value: "all",
+    value: "ANY",
     label: "Whole network",
     shortLabel: "Any"
   },
 ];
+
+export const proximityOptions = [
+  {
+    value: "ANY",
+    label: "Any",
+    shortLabel: "Any"
+  },
+  {
+    value: "frontline",
+    label: "Frontline groups",
+    shortLabel: "Frontline"
+  },
+  {
+    value: "solidarity",
+    label: "Solidarity groups",
+    shortLabel: "Solidarity"
+  },
+  {
+    value: "support",
+    label: "Support groups",
+    shortLabel: "Support"
+  },
+];
+
 
 export const colorLegend = [
   { color: "rgba(156, 46, 100, 1)", label: "Grassroots", sector: {id: 'recRdF0TaAdUAj40V'}},
@@ -123,3 +168,32 @@ export const getMethodsWithOrgCounts = (methods, orgs) => {
     };
   });
 }
+
+const overrideProximity = (org, collab) => {
+  let proximity = org.defaultProximity;
+  //console.log({collab});
+  if (typeof collab.supportOrgs !== "undefined" && collab.supportOrgs.length && collab.supportOrgs.includes(org.id)) {
+    proximity = "Support";
+  }
+  if (typeof collab.solidarityOrgs !== "undefined" && collab.solidarityOrgs.length && collab.solidarityOrgs.includes(org.id)) {
+    proximity = "Solidarity";
+  }
+  if (typeof collab.frontlineOrgs !== "undefined" && collab.frontlineOrgs && collab.frontlineOrgs.includes(org.id)) {
+    proximity = "Frontline";
+  }
+
+  return proximity;
+}
+
+export const loadOrgsForDash = (orgs, collab) => {
+  return orgs.map(function (o) {
+    const involvement = collab?.orgs?.includes(o.id) ? "active" : "potential";
+    const proximity = overrideProximity(o, collab);
+    //console.log({proximity, involvement});
+    return {
+      ...o,
+      proximity,
+      involvement
+    };
+  });
+} 

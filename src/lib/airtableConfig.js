@@ -42,6 +42,7 @@ const orgFieldMap = [
   },
   { from: "Logo", to: "logo" },
   { from: "Website", to: "website" },
+  { from: "Default Proximity", to: "defaultProximity"}
 ];
 
 /* @type {AirtableFieldMap[]} */
@@ -57,6 +58,9 @@ const collabFieldMap = [
   { from: "Sector", to: "sector" },
   { from: "Methods", to: "methods" },
   { from: "Description", to: "description" },
+  { from: "Proximity Orgs - Frontline", to: "frontlineOrgs", transform: (a) => a.length ? a : []},
+  { from: "Proximity Orgs - Solidarity", to: "solidarityOrgs", transform: (a) => a.length ? a : []},
+  { from: "Proximity Orgs - Support", to: "supportOrgs", transform: (a) => a.length ? a : []},
 ];
 
 /* @type {AirtableFieldMap[]} */
@@ -141,6 +145,7 @@ const orgConfig = {
       "Eng 200 Character Description English",
       "Logo",
       "Website",
+      "Default Proximity",
     ],
   },
 };
@@ -159,6 +164,9 @@ const collabConfig = {
       "Sector",
       "Methods",
       "Description",
+      "Proximity Orgs - Frontline",
+      "Proximity Orgs - Solidarity",
+      "Proximity Orgs - Support"
     ],
   },
 };

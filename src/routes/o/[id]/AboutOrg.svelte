@@ -5,8 +5,8 @@
     isFilteredIn,
     hasLatLng,
     translateToMarker,
-    defaultNetwork,
-    networkOptions,
+    defaultInvolvement,
+    involvementOptions,
   } from "$lib/dash/dashUtils";
   import { filterRefs } from "$lib/dataUtils";
   export let data = {};

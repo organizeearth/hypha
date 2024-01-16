@@ -1,3 +1,4 @@
+/*
 import { writable } from 'svelte/store';
 
 // Each filter is one of:
@@ -10,4 +11,4 @@ export const activeSector = writable('ANY');
 export const activeNetwork = writable('active');
 
 // Proximity options: frontline, solidarity, support, ANY
-export const activeProximity = writable('ANY')
+export const activeProximity = writable('ANY')*/
