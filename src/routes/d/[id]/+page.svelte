@@ -106,7 +106,8 @@
     arena: activeArena_value,
     sector: activeSector_value,
     method: activeSector_value,
-    network: activeInvolvement_value,
+    proximity: activeProximity_value,
+    involvement: activeInvolvement_value,
   };
 
   function filterChange() {
@@ -135,9 +136,10 @@
     }
   };
 
-  $: filteredOrgs = orgs.filter((o) =>
-    isFilteredIn(o, activeArena_value, activeMethod_value, activeSector_value, activeProximity_value, activeInvolvement_value)
-  );
+  $: filteredOrgs = orgs.filter((o) => {
+    filters = filters;
+    return isFilteredIn(o, filters);
+  });
 
   $: filteredMarkers = filteredOrgs
     .filter((o) => hasLatLng(o))

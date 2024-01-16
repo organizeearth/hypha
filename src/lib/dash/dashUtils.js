@@ -5,58 +5,58 @@ const alwaysShowCollab = false;
 
 export const centerCircleId = 'recMQeRkiPRcQ6Fjw';
 
-export const isFilteredIn = (record, arena, method, sector, proximity, involvement) => {
+export const isFilteredIn = (record, filters) => {
   if (alwaysShowCollab && record.id === centerCircleId) {
     return true;
   }
-  //console.log({record, arena, method, sector, proximity, involvement, collab});
+  console.log({record, filters});
   if (
-    arena === "ANY" &&
-    sector === "ANY" &&
-    method === "ANY" &&
-    proximity === "support" &&
-    involvement === "all"
+    filters.arena === "ANY" &&
+    filters.sector === "ANY" &&
+    filters.method === "ANY" &&
+    filters.proximity === "ANY" &&
+    filters.involvement === "ANY"
   ) {
     return true;
   }
-  if (arena !== "ANY") {
+  if (filters.arena !== "ANY") {
     if (
       typeof record.arenas === "undefined" ||
-      !record.arenas.includes(arena)
+      !record.arenas.includes(filters.arena)
     ) {
       return false;
     }
   }
-  if (sector !== "ANY") {
+  if (filters.sector !== "ANY") {
     if (
       typeof record.sector === "undefined" ||
-      !record.sector.includes(sector)
+      !record.sector.includes(filters.sector)
     ) {
       return false;
     }
   }
-  if (method !== "ANY") {
+  if (filters.method !== "ANY") {
     if (
       typeof record.methods === "undefined" ||
-      !record.methods.includes(method)
+      !record.methods.includes(filters.method)
     ) {
       return false;
     }
   }
 
-  if (proximity !== "ANY") {
+  if (filters.proximity !== "ANY") {
     if (
       typeof record.proximity === "undefined" ||
-      !record.proximity.toLowerCase() == proximity.toLowerCase()
+      !record.proximity.toLowerCase() == filters.proximity.toLowerCase()
     ) {
       return false;
     }
   }
 
-  if (involvement !== "ANY") {
+  if (filters.involvement !== "ANY") {
     if (
       typeof record.involvement === "undefined" ||
-      !record.involvement.toLowerCase() == involvement.toLowerCase()
+      !record.involvement.toLowerCase() == filters.involvement.toLowerCase()
     ) {
       return false;
     }
