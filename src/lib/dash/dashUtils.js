@@ -196,4 +196,19 @@ export const loadOrgsForDash = (orgs, collab) => {
       involvement
     };
   });
-} 
+}
+
+export const sectorToLabel = (sectorList) => {
+  const labels = {
+    recRdF0TaAdUAj40V: "Grassroots",
+    rec6f2I3uJzgPOne6: "Nonprofit",
+    rec24VSkUdwdHXvAx: "Academia",
+    recBkVRn23w2hfMgA: "Faith-based",
+    recKEW8pPinfPIEOD: "Government",
+    recsL1hjg6GlM4SXG: "Business",
+  };
+  if (labels[sectorList[0]].length) {
+    return labels[sectorList[0]];
+  }
+  return "Unknown";
+}

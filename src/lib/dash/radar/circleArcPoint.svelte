@@ -7,7 +7,7 @@
   export let fill = "white";
   export let stroke = "black";
   export let n = 1;
-  export let d = 4;
+  export let d = 10;
   export let path = "M20,60a35,35 0 1,1 60,0";
   export let id = 0;
   export let groupId = 0;

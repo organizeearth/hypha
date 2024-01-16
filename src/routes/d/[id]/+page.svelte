@@ -68,7 +68,8 @@
     proximityOptions,
     involvementOptions,
     getMethodsWithOrgCounts,
-    loadOrgsForDash
+    loadOrgsForDash,
+    sectorToLabel
   } from "$lib/dash/dashUtils";
 
   /** @type {import('./$types').PageData} */
@@ -110,6 +111,7 @@
 
   function filterChange() {
     console.log("Change!");
+    invalidateAll();
     filters = filters;
     orgs = orgs;
     filteredOrgs = filteredOrgs;
@@ -237,7 +239,7 @@
   </section>
 
   <div class="row-of-two">
-    <CollabRadar {filteredOrgs}></CollabRadar>
+    <CollabRadar {filteredOrgs} {activeOrgId}></CollabRadar>
     <section>
       <OrganicText tagType="h1" textContent="Map (Where?)" />
       <Map
@@ -255,17 +257,17 @@
       <table>
         <th>Name</th>
         <th>Sector</th>
-        <th>Colorcategory</th>
-        <th>Color</th>
-        {#each filteredMarkers as marker}
+        <th>Proximity</th>
+        <th>Involvement</th>
+        {#each filteredOrgs as org}
           <tr>
-            <td>{marker?.name}</td>
-            <td>{marker?.sector.length}</td>
-            <td>{marker?.colorcategory}</td>
+            <td>{org?.name}</td>
             <td
-              style="color: white; font-weight: bold; background: {marker
-                ?.marker?.color};">{marker?.marker?.color}</td
+              style="color: white; font-weight: bold; background: {org
+                ?.color};">{sectorToLabel(org.sector)}</td
             >
+            <td>{org?.proximity}</td>
+            <td>{org?.involvement}</td>
           </tr>
         {/each}
       </table>

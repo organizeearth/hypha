@@ -15,11 +15,25 @@ const cleanLng = (lng) => {
   return lng || -105.2612955;
 };
 
+const sectorToColor = (sectorList) => {
+  const colors = {
+    recRdF0TaAdUAj40V: "rgba(156, 46, 100, 1)", // "Grassroots"
+    rec6f2I3uJzgPOne6: "rgba(167, 44, 10, 1)", // "Nonprofit", sector: {id: ''} },
+    rec24VSkUdwdHXvAx: "rgba(138, 72, 10, 1)", // "Academia", sector: {id: ''} },
+    recBkVRn23w2hfMgA: "rgba(107, 87, 16, 1)", // "Faith-based", sector: {id: ''} },
+    recKEW8pPinfPIEOD: "rgba(36, 98, 101, 1)", // "Government" , sector: {id: ''}},
+    recsL1hjg6GlM4SXG: "rgba(83, 81, 150, 1)", // "Business", sector: {id: ''} },
+  };
+  if (colors[sectorList[0]].length) {
+    return colors[sectorList[0]];
+  }
+  return "gray";
+}
+
 /* @type {AirtableFieldMap[]} */
 const orgFieldMap = [
   { from: "Org Name", to: "name" },
   { from: "Org Name", to: "label" },
-  { from: "Org Name", to: "color", transform: (a) => "#F57F11" },
   {
     from: "Publishing Status",
     to: "published",
@@ -28,6 +42,7 @@ const orgFieldMap = [
   { from: "Collaboration/ Group", to: "collabs" },
   { from: "Arenas", to: "arenas" },
   { from: "Sector", to: "sector" },
+  { from: "Sector", to: "color", transform: (a) => sectorToColor(a) },
   { from: "Methods", to: "methods" },
   { from: "Latitude", to: "lat", transform: (a) => cleanLat(a) },
   { from: "Longitude", to: "lng", transform: (a) => cleanLng(a) },

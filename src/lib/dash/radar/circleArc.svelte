@@ -54,7 +54,7 @@
   d="{path()}"
 />
 {#each points as point, i}
-  <CircleArcPoint path="{path()}" {...point} id={i} />
+  <CircleArcPoint path="{path()}" {...point} id={i} d={points.length} />
 {/each}
 
 <style>
