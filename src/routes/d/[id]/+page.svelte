@@ -118,6 +118,21 @@
     console.log({ filters, orgs, filteredOrgs, filteredMarkers });
   }
 
+  const trim = (text, max) => {
+    if (text.length <= max) {
+      return text;
+    }
+    return text.substring(0, max) + "...";
+  };
+
+  const handleMethodChipClick = (method) => {
+    if (method.id === activeMethod_value) {
+      activeMethod.set("ANY");
+    } else {
+      activeMethod.set(method.id);
+    }
+  };
+
   $: filteredOrgs = orgs.filter((o) =>
     isFilteredIn(o, activeArena_value, activeMethod_value, activeSector_value, activeProximity_value, activeInvolvement_value)
   );
@@ -256,6 +271,7 @@
       </table>
     </section>
   </div>
+  <!--
   <div class="row-of-two">
     <section>
       <table>
@@ -277,6 +293,8 @@
       </table>
     </section>
   </div>
+  -->
+  <!--
   <div class="row-of-two">
     <section>
       <table>
@@ -297,8 +315,65 @@
         {/each}
       </table>
     </section>
+  </div>-->
+  <div class="row-of-two">
+    <section>
+      <OrganicText tagType="h1" textContent="Skillsets (How?)" />
+      <ul class="method-list">
+        {#each rankedMethods as method}
+          <li
+            class:active={method.id === activeMethod_value}
+            on:click={() => handleMethodChipClick(method)}
+          >
+            <span class="name">{trim(method.name, 20)}</span><span class="count"
+              >{method.orgCount}</span
+            >
+          </li>
+        {/each}
+      </ul>
+    </section>
+    <section>
+      <OrganicText tagType="h1" textContent="Resource Library (Why?)" />
+      <OrganicText
+        tagType="h1"
+        textContent="(coming soon)"
+        color="rgba(15, 0, 127, 0.5)"
+      />
+      <p>Browse learning resources by topic at Boulder.Earth</p>
+      <Button
+        text="View example topic"
+        link="https://boulder.earth/cmap/circular-economy/"
+        external={true}
+      />
+    </section>
   </div>
+  <div class="row-of-two">
+    <section>
+      <OrganicText tagType="h1" textContent="Bulletin board" />
+      <OrganicText
+        tagType="h1"
+        textContent="(coming soon)"
+        color="rgba(15, 0, 127, 0.5)"
+      />
+      <p>View timely resources and ways to take action at Boulder.Earth</p>
+      <Button text={bulletinText} link={bulletinUrl} external={true} />
+    </section>
+    <section class="timeline">
+      <OrganicText tagType="h1" textContent="Collective Timeline (When?)" />
+      <img src="/year-wheel-bg.png" />
+      <h3>{activeYear}</h3>
+      <div class="yearnav">
+        {#each years as year}
+          <a class="year" on:click={() => setActiveYear(year)}>
+            {"'" + (year - 2000)}
+          </a>
+        {/each}
+      </div>
+      <Button text={calendarText} link={calendarUrl} external={true} />
+    </section>
+  </div>-->
 </main>
+
 
 <style>
   .dash-head {
@@ -325,11 +400,12 @@
   .row-of-two:last-child {
     border-bottom: 2px dotted var(--color-theme-1);
   }
-  .row-of-two section {
-    border: none;
-  }
+
   .row-of-two section:first-child {
     border-right: 2px dotted var(--color-theme-1);
+  }
+  .row-of-two section {
+    border: none;
   }
   .row-of-two .container section {
     border-right: none;
@@ -345,10 +421,7 @@
   section .dash-head-item p {
     margin: 0;
   }
-  section {
-    background: white;
-  }
-  /*
+
     .method-list {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -402,5 +475,5 @@
     .year:hover {
       text-decoration: none;
       cursor: pointer;
-    }*/
+    }
 </style>

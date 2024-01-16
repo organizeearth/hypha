@@ -1,12 +1,9 @@
 <script>
   /**
-   * @TODO Filter bug
-   * @TODO Radar
-   * @TODO Network > Orgs filters
-   * @TODO Collab > Orgs filters
+   * @TODO Map pin colors via CSS
+   * @TODO Radar dot colors via CSS
+   * @TODO Radar click behavior
    * @TODO Airtable field descriptions
-   * @TODO Debug dashboard URL trailing slash
-   * @TODO Collab Nested List
   */
   import OrganicText from "$lib/organicText.svelte";
   import EntityChip from "$lib/entityChip.svelte";

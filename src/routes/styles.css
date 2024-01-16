@@ -170,7 +170,15 @@ button:focus:not(:focus-visible) {
     align-items: center;
     flex: 1;
     padding-top: 1em;
+  }
+  section {
     border: 2px dotted var(--color-theme-1);
+  }
+  .row-of-two section {
+    border-top: none;
+    border-bottom: none;
+    border-left: none;
+    border-right: 2px dotted var(--color-theme-1);
   }
   section section {
     border: none;

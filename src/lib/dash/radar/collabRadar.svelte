@@ -57,7 +57,6 @@
     flex-direction: column;
     width: 100%;
     text-align: center;
-    background: white;
   }
   .row {
     display: flex;

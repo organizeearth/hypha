@@ -32,6 +32,11 @@
       stroke: "red",
       n: 4,
     },
+    {
+      label: "D",
+      stroke: "red",
+      n: 5,
+    },
   ];
 
   const path = () => {

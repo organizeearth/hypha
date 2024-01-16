@@ -89,10 +89,14 @@
   }
 </script>
 
-<button type="button" on:click bind:this={element}>
+<button class={"sector-" + sector} type="button" on:click bind:this={element}>
   <slot />
 </button>
 
 <div on:click on:keyup class="popup" bind:this={elementPopup} role="button" tabindex="0">
   <slot name="popup" />
 </div>
+
+<style>
+
+</style>
