@@ -18,12 +18,12 @@
     </a>
   </div>
 
-  <!-- removed data-sveltekit-preload-data-->
+  <!-- removed data-sveltekit-preload-data  data-sveltekit-reload-->
   <div class="corner">
     {#if currentPath !== dashboardUrl || $page.url.pathname !== dashboardUrl}
-      <a href="{dashboardUrl}" data-sveltekit-reload>Log into dash</a>
+      <a href="{dashboardUrl}">Log into dash</a>
     {:else}
-      <a href="/" data-sveltekit-reload>Log out</a>
+      <a href="/">Log out</a>
     {/if}
   </div>
 </header>
