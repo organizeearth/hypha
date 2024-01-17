@@ -43,14 +43,14 @@
     // do something with `data`, it's the result returned from the mapbox event
   }
   function onReady() {
-    console.log({ orgs, markers });
+    //console.log({ orgs, markers });
     // console.log({ markers: orgs });
     mapComponent.setCenter([lng, lat], zoom);
     mapComponent.setZoom(zoom);
     //mapComponent.flyTo({ center: [lat, lng] });
   }
   function flyTo(org) {
-    console.log({ coords: [org.lat, org.lng] });
+    //console.log({ coords: [org.lat, org.lng] });
     mapComponent.setCenter([org.lng, org.lat], zoom);
     //mapComponent.setCenter([org.lat, org.lng], zoom);
   }

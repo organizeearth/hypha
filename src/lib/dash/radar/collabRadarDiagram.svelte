@@ -29,7 +29,7 @@
     };
   }
 
-  console.log({renderedDots});
+  //console.log({renderedDots});
   $: frontlineRing = renderedDots.filter((o) => o.proximity === "Frontline").map((o, i) => toDot(o, i));
   $: solidarityRing = renderedDots.filter((o) => o.proximity === "Solidarity").map((o, i) => toDot(o, i));
   $: supportRing = renderedDots.filter((o) => o.proximity === "Support").map((o, i) => toDot(o, i));

@@ -9,7 +9,7 @@ export const isFilteredIn = (record, filters) => {
   if (alwaysShowCollab && record.id === centerCircleId) {
     return true;
   }
-  console.log({record, filters});
+  //console.log({record, filters});
   if (
     filters.arena === "ANY" &&
     filters.sector === "ANY" &&
@@ -46,8 +46,7 @@ export const isFilteredIn = (record, filters) => {
 
   if (filters.proximity !== "ANY") {
     if (
-      typeof record.proximity === "undefined" ||
-      !record.proximity.toLowerCase() == filters.proximity.toLowerCase()
+      record.proximity.toLowerCase() !== filters.proximity.toLowerCase()
     ) {
       return false;
     }
@@ -55,8 +54,7 @@ export const isFilteredIn = (record, filters) => {
 
   if (filters.involvement !== "ANY") {
     if (
-      typeof record.involvement === "undefined" ||
-      !record.involvement.toLowerCase() == filters.involvement.toLowerCase()
+      record.involvement.toLowerCase() !== filters.involvement.toLowerCase()
     ) {
       return false;
     }

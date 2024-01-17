@@ -8,7 +8,7 @@
     const dispatch = createEventDispatcher();
   
     function dispatchActivateForce(id) {
-      console.log("Hello... " + id);
+      //console.log("Hello... " + id);
       dispatch("activateforce", {
         id: id,
       });

@@ -7,14 +7,14 @@
   import SwatchContrast from "../SwatchContrast.svelte";
 
   let proximityLegend = [
-    { label: "Frontline", id: 1 },
-    { label: "Solidarity", id: 2 },
-    { label: "Support", id: 3 },
+    { label: "Frontline", id: 1, value: "frontline" },
+    { label: "Solidarity", id: 2, value: "solidarity"},
+    { label: "Support", id: 3, value: "support" },
   ];
 
   export let filteredOrgs = [];
   $: renderedDots = filteredOrgs;
-  console.log({renderedDots});
+  //console.log({renderedDots});
   export let activeOrgId;
   export let paneTitle = "Collab Network Radar";
 </script>
@@ -33,8 +33,8 @@
         <div class="col" />
         <div class="col">
           <ul class="contrast-legend">
-            {#each proximityLegend as { id, label }}
-              <SwatchContrast {id} {label} />
+            {#each proximityLegend as { id, label, value }}
+              <SwatchContrast {id} {label} {value} />
             {/each}
           </ul>
         </div>

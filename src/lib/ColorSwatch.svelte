@@ -3,35 +3,36 @@
   export let label;
   export let sector;
   import { activeSector } from "../routes/d/[id]/stores";
-  import { onMount } from 'svelte';
-  import { invalidateAll } from '$app/navigation';
+  import { onMount } from "svelte";
+  import { invalidateAll } from "$app/navigation";
   onMount(() => {
-		const interval = setInterval(() => {
-			invalidateAll();
-		}, 1000);
+    const interval = setInterval(() => {
+      invalidateAll();
+    }, 1000);
 
-		return () => {
-			clearInterval(interval);
-		};
-	});
+    return () => {
+      clearInterval(interval);
+    };
+  });
 
-  let sector_value;
-
+  let activeSector_value;
   activeSector.subscribe((value) => {
-    sector_value = value;
+    activeSector_value = value;
   });
 
   function update() {
-    activeSector.set(sector.id);
-    console.log("Update!" + sector.id);
-    console.log({ activeSector, sector, sector_value });
+    if (activeSector_value == sector.id) {
+      activeSector.set("ANY");
+    } else {
+      activeSector.set(sector.id);
+    }
   }
 
   const faint = (color) => {
     return color.slice(0, -2) + "0.2)";
   };
 
-  $: active = sector_value == sector.id;
+  $: active = activeSector_value == sector.id;
   $: spanStyle = `background: ${color};`;
   $: itemStyle = active
     ? `background: ${faint(color)}; border-width: 3px; border-color: ${color}`

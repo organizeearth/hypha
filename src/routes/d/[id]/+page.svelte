@@ -13,17 +13,17 @@
   import Button from "$lib/Button.svelte";
   import CollabRadar from "$lib/dash/radar/collabRadar.svelte";
   import OrganicText from "$lib/organicText.svelte";
-  import { onMount } from 'svelte';
-  import { invalidateAll } from '$app/navigation';
+  import { onMount } from "svelte";
+  import { invalidateAll } from "$app/navigation";
   onMount(() => {
-		const interval = setInterval(() => {
-			invalidateAll();
-		}, 1000);
+    const interval = setInterval(() => {
+      invalidateAll();
+    }, 1000);
 
-		return () => {
-			clearInterval(interval);
-		};
-	});
+    return () => {
+      clearInterval(interval);
+    };
+  });
 
   /** @type string */
   let activeMethod_value;
@@ -69,7 +69,7 @@
     involvementOptions,
     getMethodsWithOrgCounts,
     loadOrgsForDash,
-    sectorToLabel
+    sectorToLabel,
   } from "$lib/dash/dashUtils";
 
   /** @type {import('./$types').PageData} */
@@ -87,7 +87,7 @@
   };
   $: wegotorgs = data && typeof data.orgs !== "undefined";
   $: wegotacollaborative = data && typeof data.collab !== "undefined";
-  $: collab = wegotacollaborative ? data?.collab : {id: false};
+  $: collab = wegotacollaborative ? data?.collab : { id: false };
   $: wegotcollaborgs =
     !!wegotacollaborative &&
     wegotorgs &&
@@ -98,27 +98,28 @@
     ? data.orgs.filter((o) => data.collab?.orgs?.includes(o.id))
     : [];
 
-  $: orgs = activeInvolvement_value === "active"
+  $: orgs =
+    activeInvolvement_value === "active"
       ? loadOrgsForDash(collaborgs, collab)
       : loadOrgsForDash(data.orgs, collab);
 
   $: filters = {
     arena: activeArena_value,
     sector: activeSector_value,
-    method: activeSector_value,
+    method: activeMethod_value,
     proximity: activeProximity_value,
     involvement: activeInvolvement_value,
   };
 
   function filterChange() {
-    console.log("Change!");
+    //console.log("Change!");
     invalidateAll();
     filters = filters;
     orgs = orgs;
     filteredOrgs = filteredOrgs;
     filteredMarkers = filteredMarkers;
     invalidateAll();
-    console.log({ filters, orgs, filteredOrgs, filteredMarkers });
+    //console.log({ filters, orgs, filteredOrgs, filteredMarkers });
   }
 
   const trim = (text, max) => {
@@ -160,6 +161,14 @@
     activeOrgId.set(event.detail.id);
     invalidateAll();
   }
+
+  let debugDrawerEnabled = true;
+  const toggleDebugDrawer = () => {
+    debugDrawerEnabled = !debugDrawerEnabled;
+    invalidateAll();
+  };
+  $: debugClass = debugDrawerEnabled ? "" : "hidden";
+  $: debugToggleLabel = debugDrawerEnabled ? "hide" : "show";
 </script>
 
 <main>
@@ -216,15 +225,18 @@
             {/each}
           </select>
         </label>
-              <br><br><br>
-              <label
-                >Proximity
-                <select bind:value={activeProximity_value} on:change={() => filterChange()}>
-                  {#each proximityOptions as {shortLabel, value}}
-                    <option value={value}>{shortLabel}</option>
-                  {/each}
-                </select>
-              </label>
+        <br /><br /><br />
+        <label
+          >Proximity
+          <select
+            bind:value={activeProximity_value}
+            on:change={() => filterChange()}
+          >
+            {#each proximityOptions as { shortLabel, value }}
+              <option {value}>{shortLabel}</option>
+            {/each}
+          </select>
+        </label>
       </div>
       <div class="dash-head-item">
         <Radio
@@ -233,7 +245,7 @@
           on:change={() => filterChange()}
           bind:userSelected={activeInvolvement_value}
         />
-        <br>
+        <br />
         <p>{filteredOrgs.length} on radar</p>
         <p>{filteredMarkers.length} on map</p>
       </div>
@@ -256,17 +268,20 @@
 
   <div class="row-of-two debug-drawer-wrapper">
     <section>
-      <table class="debug-drawer">
+      <button class="debug-tggle" on:click={() => toggleDebugDrawer()}
+        >{debugToggleLabel}</button
+      >
+      <table class={"debug-drawer " + debugClass}>
         <th>Name</th>
         <th>Sector</th>
         <th>Proximity</th>
         <th>Involvement</th>
         {#each filteredOrgs as org}
           <tr>
-            <td><a href={"/o/" + org.id } target="_blank">{org?.name}</a></td>
+            <td><a href={"/o/" + org.id} target="_blank">{org?.name}</a></td>
             <td
-              style="color: white; font-weight: bold; background: {org
-                ?.color};">{sectorToLabel(org.sector)}</td
+              style="color: white; font-weight: bold; background: {org?.color};"
+              >{sectorToLabel(org.sector)}</td
             >
             <td>{org?.proximity}</td>
             <td>{org?.involvement}</td>
@@ -275,51 +290,6 @@
       </table>
     </section>
   </div>
-  <!--
-  <div class="row-of-two">
-    <section>
-      <table>
-        <th>Name</th>
-        <th>Sector</th>
-        <th>Colorcategory</th>
-        <th>Color</th>
-        {#each filteredOrgs as org}
-          <tr on:click={() => console.log(org)}>
-            <td>{org?.name}</td>
-            <td>{org?.sector.length}</td>
-            <td>{org?.colorcategory}</td>
-            <td
-              style="color: white; font-weight: bold; background: {org?.color};"
-              >{org?.color}</td
-            >
-          </tr>
-        {/each}
-      </table>
-    </section>
-  </div>
-  -->
-  <!--
-  <div class="row-of-two">
-    <section>
-      <table>
-        <th>Name</th>
-        <th>Sector</th>
-        <th>Colorcategory</th>
-        <th>Color</th>
-        {#each orgs as org}
-          <tr>
-            <td>{org?.name}</td>
-            <td>{org?.sector.length}</td>
-            <td>{org?.colorcategory}</td>
-            <td
-              style="color: white; font-weight: bold; background: {org?.color};"
-              >{org?.color}</td
-            >
-          </tr>
-        {/each}
-      </table>
-    </section>
-  </div>-->
   <div class="row-of-two">
     <section>
       <OrganicText tagType="h1" textContent="Skillsets (How?)" />
@@ -375,9 +345,9 @@
       </div>
       <Button text={calendarText} link={calendarUrl} external={true} />
     </section>
-  </div>-->
+  </div>
+  -->
 </main>
-
 
 <style>
   .dash-head {
@@ -426,64 +396,70 @@
     margin: 0;
   }
 
-    .method-list {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      grid-template-rows: auto auto auto auto auto auto auto;
-      grid-auto-flow: column;
-      gap: 0.5em;
-      margin: 0 1em 2em;
-    }
-    .method-list li {
-      list-style-type: none;
-      display: flex;
-      padding: 0.25em 0.5em;
-      border-radius: 1em;
-      border: 1px solid var(--color-theme-1);
-      color: black;
-      font-weight: bold;
-      cursor: pointer;
-    }
-    .method-list li.active {
-      border-width: 3px;
-    }
-    .method-list li span {
-      flex: 4;
-    }
-    .method-list li span.name {
-      font-size: 14px;
-      align-self: center;
-    }
-    .method-list li span.count {
-      flex: 1;
-      text-align: center;
-      align-self: center;
-    }
-    .timeline h3 {
-      margin-top: -275px;
-      margin-bottom: 275px;
-      font-size: 3em;
-    }
-    .yearnav {
-      display: flex;
-      flex-direction: row;
-      margin-bottom: 1em;
-    }
-    .year {
-      flex: 1;
-      border: 1px solid black;
-      border-radius: 50%;
-      margin: 0.25em;
-      padding: 0.75em;
-    }
-    .year:hover {
-      text-decoration: none;
-      cursor: pointer;
-    }
-    .debug-drawer-wrapper {
-      display: inline; /* @TODO: Hide by changing to `display: none`*/
-    }
-    .debug-drawer {
-      width: 100%;
-    }
+  .method-list {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto auto auto auto auto auto;
+    grid-auto-flow: column;
+    gap: 0.5em;
+    margin: 0 1em 2em;
+  }
+  .method-list li {
+    list-style-type: none;
+    display: flex;
+    padding: 0.25em 0.5em;
+    border-radius: 1em;
+    border: 1px solid var(--color-theme-1);
+    color: black;
+    font-weight: bold;
+    cursor: pointer;
+  }
+  .method-list li.active {
+    border-width: 3px;
+  }
+  .method-list li span {
+    flex: 4;
+  }
+  .method-list li span.name {
+    font-size: 14px;
+    align-self: center;
+  }
+  .method-list li span.count {
+    flex: 1;
+    text-align: center;
+    align-self: center;
+  }
+  .timeline h3 {
+    margin-top: -275px;
+    margin-bottom: 275px;
+    font-size: 3em;
+  }
+  .yearnav {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 1em;
+  }
+  .year {
+    flex: 1;
+    border: 1px solid black;
+    border-radius: 50%;
+    margin: 0.25em;
+    padding: 0.75em;
+  }
+  .year:hover {
+    text-decoration: none;
+    cursor: pointer;
+  }
+  .debug-drawer-wrapper {
+    display: inline; /* @TODO: Hide by changing to `display: none`*/
+  }
+  .debug-drawer {
+    width: 100%;
+  }
+  .hidden {
+    display: none;
+  }
+  .debug-toggle {
+    margin-top: -1em;
+  }
 </style>

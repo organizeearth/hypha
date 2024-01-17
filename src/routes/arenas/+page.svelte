@@ -22,7 +22,7 @@
     return `${myScaledColor((i * 1.0) / arenas.length)}`;
   };
 
-  console.log({ arenas: data.arenas });
+  //console.log({ arenas: data.arenas });
   let activeTab = "arenas";
   let tabs = ["arenas", "networks", "legend"];
 </script>

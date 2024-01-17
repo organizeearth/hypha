@@ -1,10 +1,4 @@
 <script>
-  /**
-   * @TODO Map pin colors via CSS
-   * @TODO Radar dot colors via CSS
-   * @TODO Radar click behavior
-   * @TODO Airtable field descriptions
-   */
   import OrganicText from "$lib/organicText.svelte";
   import EntityChip from "$lib/entityChip.svelte";
   import EntityFlower from "$lib/entityFlower.svelte";

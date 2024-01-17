@@ -53,7 +53,7 @@
     //mapComponent.flyTo({ center: [lat, lng] });
   }
   function flyTo(org) {
-    console.log({ coords: [org.lat, org.lng] });
+    //console.log({ coords: [org.lat, org.lng] });
     mapComponent.setCenter([org.lng, org.lat], zoom);
     //mapComponent.setCenter([org.lat, org.lng], zoom);
   }
