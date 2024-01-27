@@ -183,10 +183,10 @@
 
   let debugDrawerEnabled = true;
   const toggleDebugDrawer = () => {
-    !debugDrawerEnabled = debugDrawerEnabled;
+    debugDrawerEnabled = !debugDrawerEnabled;
     invalidateAll();
   };
-  $: debugClass = debugDrawerEnabled ? "" : "hidden";
+  $: debugClass = debugDrawerEnabled ? "hidden" : "";
   $: debugToggleLabel = debugDrawerEnabled ? "Hide List of Displayed Organizations" : "View List of Displayed Organizations";
 </script>
 
