@@ -187,7 +187,9 @@
     invalidateAll();
   };
   $: debugClass = debugDrawerEnabled ? "hidden" : "";
-  $: debugToggleLabel = debugDrawerEnabled ? "Hide List of Displayed Organizations" : "View List of Displayed Organizations";
+  $: whoToggleLabel = debugDrawerEnabled ? "View List of Displayed Organizations" : "Hide List of Displayed Organizations";
+  $: whatToggleLabel = debugDrawerEnabled ? "View List of Available Arenas" : "Hide List of Available Arenas";
+  $: howToggleLabel = debugDrawerEnabled ? "View List of Available Skillsets" : "Hide List of Available Skillsets";
 </script>
 
 <main>
@@ -285,25 +287,38 @@
     </section>
   </div>
 
+  <div class="row-of-two debug-drawer-wrapper">
+    <section>
+      <OrganicText tagType="h1" textContent="Intersections (Who?)" />
+      <button class="debug-tggle" on:click={() => toggleDebugDrawer()}
+        >{whoToggleLabel}</button
+      >
+      <table class={"debug-drawer " + debugClass}>
+        <th>Name</th>
+        <th>Sector</th>
+        <th>Proximity</th>
+        <th>Involvement</th>
+        {#each filteredOrgs as org}
+          <tr>
+            <td><a href={"/o/" + org.id} target="_blank">{org?.name}</a></td>
+            <td
+              style="color: white; font-weight: bold; background: {org?.color};"
+              >{sectorToLabel(org.sector)}</td
+            >
+            <td>{org?.proximity}</td>
+            <td>{org?.involvement}</td>
+          </tr>
+        {/each}
+      </table>
+    </section>
+  </div>
+
   <div class="row-of-two">
     <section>
-      <OrganicText tagType="h1" textContent="Skillsets (How?)" />
-      <ul class="method-list">
-        {#each rankedMethods as method}
-          <li
-            class:active={method.id === activeMethod_value}
-            on:click={() => handleMethodChipClick(method)}
-          >
-            <span class="name">{trim(method.name, 20)}</span><span class="count"
-              >{method.orgCount}</span
-            >
-          </li>
-        {/each}
-      </ul>
-    </section>
-
-    <section>
       <OrganicText tagType="h1" textContent="Arenas (What?)" />
+      <button class="debug-tggle" on:click={() => toggleDebugDrawer()}
+        >{whatToggleLabel}</button
+      >
       <ul class="method-list">
         {#each rankedArenas as arena}
           <li
@@ -312,6 +327,27 @@
           >
             <span class="name">{trim(arena.name, 20)}</span><span class="count"
               >{arena.orgCount}</span
+            >
+          </li>
+        {/each}
+      </ul>
+    </section>
+  </div>
+
+  <div class="row-of-two">
+    <section>
+      <OrganicText tagType="h1" textContent="Skillsets (How?)" />
+      <button class="debug-tggle" on:click={() => toggleDebugDrawer()}
+        >{howToggleLabel}</button
+      >
+      <ul class="method-list">
+        {#each rankedMethods as method}
+          <li
+            class:active={method.id === activeMethod_value}
+            on:click={() => handleMethodChipClick(method)}
+          >
+            <span class="name">{trim(method.name, 20)}</span><span class="count"
+              >{method.orgCount}</span
             >
           </li>
         {/each}
@@ -346,32 +382,6 @@
         {/each}
       </div>
       <Button text={calendarText} link={calendarUrl} external={true} />
-    </section>
-  </div>
-
-  <div class="row-of-two debug-drawer-wrapper">
-      <button class="debug-tggle" on:click={() => toggleDebugDrawer()}
-        >{debugToggleLabel}</button
-      >
-    <section>
-
-      <table class={"debug-drawer " + debugClass}>
-        <th>Name</th>
-        <th>Sector</th>
-        <th>Proximity</th>
-        <th>Involvement</th>
-        {#each filteredOrgs as org}
-          <tr>
-            <td><a href={"/o/" + org.id} target="_blank">{org?.name}</a></td>
-            <td
-              style="color: white; font-weight: bold; background: {org?.color};"
-              >{sectorToLabel(org.sector)}</td
-            >
-            <td>{org?.proximity}</td>
-            <td>{org?.involvement}</td>
-          </tr>
-        {/each}
-      </table>
     </section>
   </div>
   <div class="row-of-two">
