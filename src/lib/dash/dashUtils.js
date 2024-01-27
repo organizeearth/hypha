@@ -167,17 +167,6 @@ export const getMethodsWithOrgCounts = (methods, orgs) => {
   });
 }
 
-export const getArenasWithOrgCounts = (arenas, orgs) => {
-  return arenas.map(function (a) {
-    const orgObjects = orgs.filter((o) => o?.arenas?.includes(a.id));
-    return {
-      ...a,
-      orgCount: orgObjects.length,
-      orgObjects: orgObjects,
-    };
-  });
-}
-
 const overrideProximity = (org, collab) => {
   let proximity = org.defaultProximity;
   //console.log({collab});
