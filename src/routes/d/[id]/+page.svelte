@@ -68,7 +68,6 @@
     proximityOptions,
     involvementOptions,
     getMethodsWithOrgCounts,
-    getArenasWithOrgCounts,
     loadOrgsForDash,
     sectorToLabel,
   } from "$lib/dash/dashUtils";
@@ -138,14 +137,6 @@
     }
   };
 
-  const handleArenaChipClick = (arena) => {
-    if (arena.id === activeArena_value) {
-      activeArena.set("ANY");
-    } else {
-      activeArena.set(arena.id);
-    }
-  };
-
   $: filteredOrgs = orgs.filter((o) => {
     filters = filters;
     return isFilteredIn(o, filters);
@@ -157,16 +148,6 @@
 
   $: methods = getMethodsWithOrgCounts(data.methods, filteredOrgs);
   $: rankedMethods = methods
-    .sort((a, b) => {
-      //console.log({a, b});
-      if (a.orgCount < b.orgCount) return 1;
-      if (b.orgCount < a.orgCount) return -1;
-      return 0;
-    })
-    .filter((m) => m.orgCount > 0);
-
-  $: arenas = getArenasWithOrgCounts(data.arenas, filteredOrgs);
-  $: rankedArenas = arenas
     .sort((a, b) => {
       //console.log({a, b});
       if (a.orgCount < b.orgCount) return 1;
@@ -285,70 +266,6 @@
     </section>
   </div>
 
-  <div class="row-of-two">
-    <section>
-      <OrganicText tagType="h1" textContent="Skillsets (How?)" />
-      <ul class="method-list">
-        {#each rankedMethods as method}
-          <li
-            class:active={method.id === activeMethod_value}
-            on:click={() => handleMethodChipClick(method)}
-          >
-            <span class="name">{trim(method.name, 20)}</span><span class="count"
-              >{method.orgCount}</span
-            >
-          </li>
-        {/each}
-      </ul>
-    </section>
-
-    <section>
-      <OrganicText tagType="h1" textContent="Arenas (What?)" />
-      <ul class="method-list">
-        {#each rankedArenas as arena}
-          <li
-            class:active={arena.id === activeArena_value}
-            on:click={() => handleArenaChipClick(arena)}
-          >
-            <span class="name">{trim(arena.name, 20)}</span><span class="count"
-              >{arena.orgCount}</span
-            >
-          </li>
-        {/each}
-      </ul>
-    </section>
-  </div>
-
-  <div class="row-of-two">
-    <section>
-      <OrganicText tagType="h1" textContent="Resource Library (Why?)" />
-      <OrganicText
-        tagType="h1"
-        textContent="(coming soon)"
-        color="rgba(15, 0, 127, 0.5)"
-      />
-      <p>Browse learning resources by topic at Boulder.Earth</p>
-      <Button
-        text="View example topic"
-        link="https://boulder.earth/cmap/circular-economy/"
-        external={true}
-      />
-    </section>
-    <section class="timeline">
-      <OrganicText tagType="h1" textContent="Collective Timeline (When?)" />
-      <img src="/year-wheel-bg.png" />
-      <h3>{activeYear}</h3>
-      <div class="yearnav">
-        {#each years as year}
-          <a class="year" on:click={() => setActiveYear(year)}>
-            {"'" + (year - 2000)}
-          </a>
-        {/each}
-      </div>
-      <Button text={calendarText} link={calendarUrl} external={true} />
-    </section>
-  </div>
-
   <div class="row-of-two debug-drawer-wrapper">
     <section>
       <button class="debug-tggle" on:click={() => toggleDebugDrawer()}
@@ -375,6 +292,37 @@
   </div>
   <div class="row-of-two">
     <section>
+      <OrganicText tagType="h1" textContent="Skillsets (How?)" />
+      <ul class="method-list">
+        {#each rankedMethods as method}
+          <li
+            class:active={method.id === activeMethod_value}
+            on:click={() => handleMethodChipClick(method)}
+          >
+            <span class="name">{trim(method.name, 20)}</span><span class="count"
+              >{method.orgCount}</span
+            >
+          </li>
+        {/each}
+      </ul>
+    </section>
+    <section>
+      <OrganicText tagType="h1" textContent="Resource Library (Why?)" />
+      <OrganicText
+        tagType="h1"
+        textContent="(coming soon)"
+        color="rgba(15, 0, 127, 0.5)"
+      />
+      <p>Browse learning resources by topic at Boulder.Earth</p>
+      <Button
+        text="View example topic"
+        link="https://boulder.earth/cmap/circular-economy/"
+        external={true}
+      />
+    </section>
+  </div>
+  <div class="row-of-two">
+    <section>
       <OrganicText tagType="h1" textContent="Bulletin board" />
       <OrganicText
         tagType="h1"
@@ -384,8 +332,20 @@
       <p>View timely resources and ways to take action at Boulder.Earth</p>
       <Button text={bulletinText} link={bulletinUrl} external={true} />
     </section>
+    <section class="timeline">
+      <OrganicText tagType="h1" textContent="Collective Timeline (When?)" />
+      <img src="/year-wheel-bg.png" />
+      <h3>{activeYear}</h3>
+      <div class="yearnav">
+        {#each years as year}
+          <a class="year" on:click={() => setActiveYear(year)}>
+            {"'" + (year - 2000)}
+          </a>
+        {/each}
+      </div>
+      <Button text={calendarText} link={calendarUrl} external={true} />
+    </section>
   </div>
-
   -->
 </main>
 
