@@ -188,8 +188,6 @@
   };
   $: debugClass = debugDrawerEnabled ? "hidden" : "";
   $: whoToggleLabel = debugDrawerEnabled ? "View List of Displayed Organizations" : "Hide List of Displayed Organizations";
-  $: whatToggleLabel = debugDrawerEnabled ? "View List of Available Arenas" : "Hide List of Available Arenas";
-  $: howToggleLabel = debugDrawerEnabled ? "View List of Available Skillsets" : "Hide List of Available Skillsets";
 </script>
 
 <main>
@@ -316,9 +314,6 @@
   <div class="row-of-two">
     <section>
       <OrganicText tagType="h1" textContent="Arenas (What?)" />
-      <button class="debug-tggle" on:click={() => toggleDebugDrawer()}
-        >{whatToggleLabel}</button
-      >
       <ul class="method-list">
         {#each rankedArenas as arena}
           <li
@@ -332,14 +327,8 @@
         {/each}
       </ul>
     </section>
-  </div>
-
-  <div class="row-of-two">
     <section>
       <OrganicText tagType="h1" textContent="Skillsets (How?)" />
-      <button class="debug-tggle" on:click={() => toggleDebugDrawer()}
-        >{howToggleLabel}</button
-      >
       <ul class="method-list">
         {#each rankedMethods as method}
           <li
@@ -505,7 +494,7 @@
     display: inline; /* @TODO: Hide by changing to `display: none`*/
   }
   .debug-drawer {
-    width: 100%;
+    width: 90%;
   }
   .hidden {
     display: none;
