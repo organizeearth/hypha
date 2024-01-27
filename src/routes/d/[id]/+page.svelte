@@ -183,11 +183,11 @@
 
   let debugDrawerEnabled = true;
   const toggleDebugDrawer = () => {
-    !debugDrawerEnabled = debugDrawerEnabled;
+    debugDrawerEnabled = !debugDrawerEnabled;
     invalidateAll();
   };
   $: debugClass = debugDrawerEnabled ? "" : "hidden";
-  $: debugToggleLabel = debugDrawerEnabled ? "Hide List of Displayed Organizations" : "View List of Displayed Organizations";
+  $: debugToggleLabel = debugDrawerEnabled ? "hide" : "show";
 </script>
 
 <main>
@@ -350,11 +350,10 @@
   </div>
 
   <div class="row-of-two debug-drawer-wrapper">
+    <section>
       <button class="debug-tggle" on:click={() => toggleDebugDrawer()}
         >{debugToggleLabel}</button
       >
-    <section>
-
       <table class={"debug-drawer " + debugClass}>
         <th>Name</th>
         <th>Sector</th>
