@@ -11,7 +11,7 @@ export default {
 			fallback: undefined,
 			precompress: false,
 			strict: true,
-			trailingSlash: 'never'
+			trailingSlash: 'always'
 		})
 	}
 };
