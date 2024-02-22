@@ -12,6 +12,9 @@ export default {
 			precompress: false,
 			strict: true,
 			trailingSlash: 'always'
-		})
+		}),
+		paths: {
+			relative: false
+		}
 	}
 };
