@@ -15,9 +15,6 @@ export default {
 		}),
 		paths: {
 			relative: false
-		},
-		router: {
-			trailingSlash: false
 		}
 	}
 };
