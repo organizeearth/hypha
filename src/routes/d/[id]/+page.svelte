@@ -298,7 +298,7 @@
         <th>Involvement</th>
         {#each filteredOrgs as org}
           <tr>
-            <td><a href={"/o/" + org.id} target="_self">{org?.name}</a></td>
+            <td><a href={"/o/" + org.id +".html"} target="_self">{org?.name}</a></td>
             <td
               style="color: white; font-weight: bold; background: {org?.color};"
               >{sectorToLabel(org.sector)}</td
