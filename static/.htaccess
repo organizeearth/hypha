@@ -1,8 +1,12 @@
-<IfModule mod_rewrite.c>
-	RewriteEngine On
-	RewriteBase /
-	RewriteRule ^200\.html$ - [L]
-	RewriteCond %{REQUEST_FILENAME} !-f
-	RewriteCond %{REQUEST_FILENAME} !-d
-	RewriteRule . /index.html [L]
-</IfModule>
+# Rewrite non /hypha/build/ requests to /hypha/build/
+
+RewriteCond %{REQUEST_URI} !^/hypha/build/
+
+RewriteRule ^(.*)$ /app/build/$1 [L]
+
+# Rewrite requests to non-existing files/dirs to /hypha/build/index.html
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+RewriteRule ^(.*)$ /hypha/build/index.html [L]
