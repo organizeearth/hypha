@@ -2,7 +2,7 @@
 
 RewriteCond %{REQUEST_URI} !^/hypha/build/
 
-RewriteRule ^(.*)$ /app/build/$1 [L]
+RewriteRule ^(.*)$ /hypha/build/$1 [L]
 
 # Rewrite requests to non-existing files/dirs to /hypha/build/index.html
 
