@@ -352,12 +352,12 @@
         textContent="Guiding Principles"
         color="rgba(15, 0, 127, 0.5)"
       />
-      <p>1) Prioritize a Climate Justice lens</p>
-      <p>2) Commitment to Collaboration</p>
-      <p>3) Resource Sharing</p>
-      <p>4) Community Engagement</p>
-      <p>5) Long-Term Planning</p>
-      <p>6) Continuous Learning</p>
+      <p>1) Prioritize a Climate Justice lens<br>
+      2) Commitment to Collaboration<br>
+      3) Resource Sharing<br>
+      4) Community Engagement<br>
+      5) Long-Term Planning<br>
+      6) Continuous Learning</p>
       <OrganicText
         tagType="h1"
         textContent="Problem Statements"
