@@ -274,7 +274,7 @@
   <div class="row-of-two">
     <CollabRadar {filteredOrgs} {activeOrgId}></CollabRadar>
     <section>
-      <OrganicText tagType="h1" textContent="Map (Where?)" />
+      <OrganicText tagType="h1" textContent="Impact Map (Where?)" />
       <Map
         orgs={filteredMarkers}
         collabs={data.collabs}
@@ -287,7 +287,7 @@
 
   <div class="row-of-two debug-drawer-wrapper">
     <section>
-      <OrganicText tagType="h1" textContent="Intersections (Who?)" />
+      <OrganicText tagType="h1" textContent="Positionality Directory (Who?)" />
       <button class="debug-tggle" on:click={() => toggleDebugDrawer()}
         >{whoToggleLabel}</button
       >
@@ -313,7 +313,7 @@
 
   <div class="row-of-two">
     <section>
-      <OrganicText tagType="h1" textContent="Arenas (What?)" />
+      <OrganicText tagType="h1" textContent="Arena Efforts (What?)" />
       <ul class="method-list">
         {#each rankedArenas as arena}
           <li
@@ -328,7 +328,7 @@
       </ul>
     </section>
     <section>
-      <OrganicText tagType="h1" textContent="Skillsets (How?)" />
+      <OrganicText tagType="h1" textContent="Skill Sets (How?)" />
       <ul class="method-list">
         {#each rankedMethods as method}
           <li
@@ -346,21 +346,37 @@
 
   <div class="row-of-two">
     <section>
-      <OrganicText tagType="h1" textContent="Resource Library (Why?)" />
+      <OrganicText tagType="h1" textContent="Fundamentals (Why?)" />
       <OrganicText
         tagType="h1"
-        textContent="(coming soon)"
+        textContent="Guiding Principles"
         color="rgba(15, 0, 127, 0.5)"
       />
-      <p>Browse learning resources by topic at Boulder.Earth</p>
+      <p>1) Prioritize a Climate Justice lens</p>
+      <p>2) Commitment to Collaboration</p>
+      <p>3) Resource Sharing</p>
+      <p>4) Community Engagement</p>
+      <p>5) Long-Term Planning</p>
+      <p>6) Continuous Learning</p>
+      <OrganicText
+        tagType="h1"
+        textContent="Problem Statements"
+        color="rgba(15, 0, 127, 0.5)"
+      />
+      <p>[Insert problem statement for this collaboration]</p>
+      <OrganicText
+        tagType="h1"
+        textContent="Resource Library"
+        color="rgba(15, 0, 127, 0.5)"
+      />
       <Button
-        text="View example topic"
-        link="https://boulder.earth/cmap/circular-economy/"
+        text="Browse"
+        link="https://www.zotero.org/groups/5346947/boco_cj_hive/library"
         external={true}
       />
     </section>
     <section class="timeline">
-      <OrganicText tagType="h1" textContent="Collective Timeline (When?)" />
+      <OrganicText tagType="h1" textContent="Benchmarks (When?)" />
       <img src="/year-wheel-bg.png" />
       <h3>{activeYear}</h3>
       <div class="yearnav">
