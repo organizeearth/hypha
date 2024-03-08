@@ -274,7 +274,7 @@
   <div class="row-of-two">
     <CollabRadar {filteredOrgs} {activeOrgId}></CollabRadar>
     <section>
-      <OrganicText tagType="h1" textContent="Impact Map (Where?)" />
+      <OrganicText tagType="h1" textContent="Impact Map" />
       <Map
         orgs={filteredMarkers}
         collabs={data.collabs}
@@ -287,7 +287,7 @@
 
   <div class="row-of-two debug-drawer-wrapper">
     <section>
-      <OrganicText tagType="h1" textContent="Positionality Directory (Who?)" />
+      <OrganicText tagType="h1" textContent="Positionality Directory" />
       <button class="debug-tggle" on:click={() => toggleDebugDrawer()}
         >{whoToggleLabel}</button
       >
@@ -313,7 +313,7 @@
 
   <div class="row-of-two">
     <section>
-      <OrganicText tagType="h1" textContent="Arena Efforts (What?)" />
+      <OrganicText tagType="h1" textContent="Arena Efforts" />
       <ul class="method-list">
         {#each rankedArenas as arena}
           <li
@@ -328,7 +328,7 @@
       </ul>
     </section>
     <section>
-      <OrganicText tagType="h1" textContent="Skill Sets (How?)" />
+      <OrganicText tagType="h1" textContent="Skill Sets" />
       <ul class="method-list">
         {#each rankedMethods as method}
           <li
@@ -346,7 +346,7 @@
 
   <div class="row-of-two">
     <section>
-      <OrganicText tagType="h1" textContent="Fundamentals (Why?)" />
+      <OrganicText tagType="h1" textContent="Fundamentals" />
       <OrganicText
         tagType="h1"
         textContent="Guiding Principles"
@@ -376,7 +376,7 @@
       />
     </section>
     <section class="timeline">
-      <OrganicText tagType="h1" textContent="Benchmarks (When?)" />
+      <OrganicText tagType="h1" textContent="Benchmarks" />
       <img src="/year-wheel-bg.png" />
       <h3>{activeYear}</h3>
       <div class="yearnav">
