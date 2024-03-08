@@ -16,7 +16,7 @@
   $: renderedDots = filteredOrgs;
   //console.log({renderedDots});
   export let activeOrgId;
-  export let paneTitle = "Positionality Radar (Who?)";
+  export let paneTitle = "Solidarity Radar";
 </script>
 
 <section>
