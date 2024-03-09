@@ -188,6 +188,19 @@
   };
   $: debugClass = debugDrawerEnabled ? "hidden" : "";
   $: whoToggleLabel = debugDrawerEnabled ? "View List of Displayed Organizations" : "Hide List of Displayed Organizations";
+
+// Holds table sort state.  Initialized to reflect table sorted by first column ascending.
+	let sortBy = {col: "Organization Name", ascending: true};
+	
+	$: sort = (column) => {
+		
+		if (sortBy.col == column) {
+			sortBy.ascending = !sortBy.ascending
+		} else {
+			sortBy.col = column
+			sortBy.ascending = true
+		}
+
 </script>
 
 <main>
@@ -277,11 +290,11 @@
       <button class="debug-tggle" on:click={() => toggleDebugDrawer()}
         >{whoToggleLabel}</button
       >
-      <table class={"debug-drawer " + debugClass}>
-        <th>Organization Name</th>
-        <th>Sector</th>
-        <th>Proximity</th>
-        <th>Involvement</th>
+      <table class={"debug-drawer " + debugClass} sort=a>
+        <th on:click={sort("Organization Name")}>Organization Name</th>
+        <th on:click={sort("Sector")}>Sector</th>
+        <th on:click={sort("Proximity")}>Proximity</th>
+        <th on:click={sort("Involvement")}>Involvement</th>
         {#each filteredOrgs as org}
           <tr>
             <td><a href={"/o/" + org.id}>{org?.name}</a></td>
@@ -294,6 +307,7 @@
           </tr>
         {/each}
       </table>
+      <br>
     </section>
   </div>
 
@@ -510,7 +524,7 @@
     display: inline; /* @TODO: Hide by changing to `display: none`*/
   }
   .debug-drawer {
-    width: 80%;
+    width: 100%;
   }
   .hidden {
     display: none;
