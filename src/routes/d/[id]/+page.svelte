@@ -271,20 +271,6 @@
     </div>
   </section>
 
-  <div class="row-of-two">
-    <CollabRadar {filteredOrgs} {activeOrgId}></CollabRadar>
-    <section>
-      <OrganicText tagType="h1" textContent="Impact Map" />
-      <Map
-        orgs={filteredMarkers}
-        collabs={data.collabs}
-        arenas={data.arenas}
-        {activeOrgId}
-        on:activate={handleActivate}
-      />
-    </section>
-  </div>
-
   <div class="row-of-two debug-drawer-wrapper">
     <section>
       <OrganicText tagType="h1" textContent="Positionality Directory" />
@@ -292,7 +278,7 @@
         >{whoToggleLabel}</button
       >
       <table class={"debug-drawer " + debugClass}>
-        <th>Name</th>
+        <th>Organization Name</th>
         <th>Sector</th>
         <th>Proximity</th>
         <th>Involvement</th>
@@ -308,6 +294,20 @@
           </tr>
         {/each}
       </table>
+    </section>
+  </div>
+
+  <div class="row-of-two">
+    <CollabRadar {filteredOrgs} {activeOrgId}></CollabRadar>
+    <section>
+      <OrganicText tagType="h1" textContent="Impact Map" />
+      <Map
+        orgs={filteredMarkers}
+        collabs={data.collabs}
+        arenas={data.arenas}
+        {activeOrgId}
+        on:activate={handleActivate}
+      />
     </section>
   </div>
 
@@ -510,7 +510,7 @@
     display: inline; /* @TODO: Hide by changing to `display: none`*/
   }
   .debug-drawer {
-    width: 90%;
+    width: 80%;
   }
   .hidden {
     display: none;
