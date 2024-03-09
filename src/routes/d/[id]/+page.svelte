@@ -194,12 +194,11 @@
 	
 	$: sort = (column) => {
 		
-		if (sortBy.col == column) {
-			sortBy.ascending = !sortBy.ascending
-		} else {
+		if (sortBy.col == column) {sortBy.ascending = !sortBy.ascending};
+		{
 			sortBy.col = column
 			sortBy.ascending = true
-		}
+		};
 
 </script>
 
