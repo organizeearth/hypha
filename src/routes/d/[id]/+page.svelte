@@ -279,10 +279,10 @@
         >{whoToggleLabel}</button
       >
       <table class={"debug-drawer " + debugClass}>
-        <th}>Organization Name</th>
-        <th}>Sector</th>
-        <th}>Proximity</th>
-        <th}>Involvement</th>
+        <th>Organization Name</th>
+        <th>Sector</th>
+        <th>Proximity</th>
+        <th>Involvement</th>
         {#each filteredOrgs as org}
           <tr>
             <td><a href={"/o/" + org.id}>{org?.name}</a></td>
