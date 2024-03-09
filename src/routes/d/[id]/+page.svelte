@@ -290,7 +290,7 @@
       <button class="debug-tggle" on:click={() => toggleDebugDrawer()}
         >{whoToggleLabel}</button
       >
-      <table class={"debug-drawer " + debugClass} sort=a>
+      <table class={"debug-drawer " + debugClass}>
         <th on:click={sort("Organization Name")}>Organization Name</th>
         <th on:click={sort("Sector")}>Sector</th>
         <th on:click={sort("Proximity")}>Proximity</th>
