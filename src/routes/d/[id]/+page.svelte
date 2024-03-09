@@ -271,7 +271,7 @@
     </div>
   </section>
 
-  <div class="row-of-two debug-drawer-wrapper">
+  <div class="row-of-two">
     <section>
       <OrganicText tagType="h1" textContent="Positionality Directory" />
       <button class="debug-tggle" on:click={() => toggleDebugDrawer()}
