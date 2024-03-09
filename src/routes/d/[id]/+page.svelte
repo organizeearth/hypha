@@ -277,12 +277,12 @@
       <OrganicText tagType="h1" textContent="Positionality Directory" />
       <button class="debug-tggle" on:click={() => toggleDebugDrawer()}
         >{whoToggleLabel}</button
-      >
+      ><br>
       <table class={"debug-drawer " + debugClass}>
-        <th>Organization Name</th>
-        <th>Sector</th>
-        <th>Proximity</th>
-        <th>Involvement</th>
+        <th style="color: white; font-weight: bold; background: black;">Organization Name</th>
+        <th style="color: white; font-weight: bold; background: black;">Sector</th>
+        <th style="color: white; font-weight: bold; background: black;">Proximity</th>
+        <th style="color: white; font-weight: bold; background: black;">Involvement</th>
         {#each filteredOrgs as org}
           <tr>
             <td><a href={"/o/" + org.id}>{org?.name}</a></td>
@@ -512,7 +512,7 @@
     display: inline; /* @TODO: Hide by changing to `display: none`*/
   }
   .debug-drawer {
-    width: 100%;
+    width: 95%;
   }
   .hidden {
     display: none;
