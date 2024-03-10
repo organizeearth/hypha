@@ -28,7 +28,7 @@
   </div>
   <div class="row">
     <div class="col">
-      <h5>Impact Proximity</h5>
+      <h5>Impact<br>Proximity</h5>
       <div class="row">
         <div class="col" />
         <div class="col">
